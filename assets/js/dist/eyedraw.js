@@ -257,6 +257,8 @@ ED.setTitles = function(titles) {
 /**
  * Array of 200 random numbers
  */
+ ED.randomArray1=[140,  812 ,  41 ,  402 ,  860 ,  658 ,  695 ,  923 ,  201 ,  99 ,  313 ,  169 ,  104 ,  783 ,  872 ,  914 ,  727 ,  665 ,  773 ,  494 ,  182 ,  527 ,  276 ,  637 ,  333 ,  103 ,  361 ,  507 ,  566 ,  289 ,  756 ,  922 ,  453 ,  149 ,  324 ,  313 ,  159 ,  19 ,  236 ,  360 ,  470 ,  901 ,  882 ,  574 ,  685 ,  754 ,  841 ,  764 ,  419 ,  614 ,  258 ,  954 ,  493 ,  886 ,  591 ,  827 ,  989 ,  953 ,  686 ,  907 ,  594 ,  794 ,  829 ,  47 ,  944 ,  506 ,  360 ,  103 ,  525 ,  949 ,  816 ,  348 ,  850 ,  698 ,  274 ,  887 ,  452 ,  467 ,  651 ,  224 ,  433 ,  262 ,  178 ,  927 ,  500 ,  121 ,  754 ,  490 ,  426 ,  440 ,  397 ,  20 ,  234 ,  579 ,  419 ,  530 ,  85 ,  780 ,  986 ,  962 ,  81 ,  802 ,  310 ,  283 ,  500 ,  585 ,  171 ,  304 ,  52 ,  822 ,  528 ,  486 ,  436 ,  58 ,  413 ,  937 ,  180 ,  519 ,  779 ,  606 ,  311 ,  528 ,  979 ,  545 ,  107 ,  398 ,  428 ,  192 ,  530 ,  414 ,  507 ,  611 ,  568 ,  817 ,  895 ,  420 ,  754 ,  418 ,  724 ,  159 ,  592 ,  605 ,  997 ,  29 ,  15 ,  410 ,  966 ,  195 ,  281 ,  97 ,  154 ,  592 ,  625 ,  133 ,  489 ,  733 ,  531 ,  917 ,  277 ,  62 ,  683 ,  784 ,  673 ,  251 ,  954 ,  920 ,  671 ,  60 ,  338 ,  748 ,  219 ,  931 ,  705 ,  216 ,  312 ,  720 ,  978 ,  630 ,  916 ,  611 ,  727 ,  422 ,  203 ,  352 ,  555 ,  693 ,  85 ,  86 ,  610 ,  715 ,  500 ,  646 ,  499 ,  526 ,  897 ,  805 ,  446 ,  921 ,  866 ,  137];
+
 ED.randomArray = [0.6570, 0.2886, 0.7388, 0.1621, 0.9896, 0.0434, 0.1695, 0.9099, 0.1948, 0.4433, 0.1580, 0.7392, 0.8730, 0.2165, 0.7138, 0.6316, 0.3425, 0.2838, 0.4551, 0.4153, 0.7421, 0.3364, 0.6087, 0.1986, 0.5764, 0.1952, 0.6179, 0.6699, 0.0903, 0.2968, 0.2684, 0.9383, 0.2488, 0.4579, 0.2921, 0.9085, 0.7951, 0.4500, 0.2255, 0.3366, 0.6670, 0.7300, 0.5511, 0.5623, 0.1376, 0.5553, 0.9898, 0.4317, 0.5922, 0.6452, 0.5008, 0.7077, 0.0704, 0.2293, 0.5697, 0.7415, 0.1557, 0.2944, 0.4566, 0.4129, 0.2449, 0.5620, 0.4105, 0.5486, 0.8917, 0.9346, 0.0921, 0.7998, 0.7717, 0.0357, 0.1179, 0.0168, 0.1520, 0.5187, 0.3466, 0.1663, 0.5935, 0.7524, 0.8410, 0.1859, 0.6012, 0.8171, 0.9272, 0.3367, 0.8133, 0.4868, 0.3665, 0.9625, 0.7839, 0.3052, 0.1651, 0.6414, 0.7361, 0.0065, 0.3267, 0.0554, 0.3389, 0.8967, 0.8777, 0.0557, 0.9201, 0.6015, 0.2676, 0.3365, 0.2606, 0.0989, 0.2085, 0.3526, 0.8476, 0.0146, 0.0190, 0.6896, 0.5198, 0.9871, 0.0288, 0.8037, 0.6741, 0.2148, 0.2584, 0.8447, 0.8480, 0.5557, 0.2480, 0.4736, 0.8869, 0.1867, 0.3869, 0.6871, 0.1011, 0.7561, 0.7340, 0.1525, 0.9968, 0.8179, 0.7103, 0.5462, 0.4150, 0.4187, 0.0478, 0.6511, 0.0386, 0.5243, 0.7271, 0.9093, 0.4461, 0.1264, 0.0756, 0.9405, 0.7287, 0.0684, 0.2820, 0.4059, 0.3694, 0.7641, 0.4188, 0.0498, 0.7841, 0.9136, 0.6210, 0.2249, 0.9935, 0.9709, 0.0741, 0.6218, 0.3166, 0.2237, 0.7754, 0.4191, 0.2195, 0.2935, 0.4529, 0.9112, 0.9183, 0.3275, 0.1856, 0.8345, 0.0442, 0.6297, 0.9030, 0.4689, 0.9512, 0.2219, 0.9993, 0.8981, 0.1018, 0.9362, 0.6426, 0.4563, 0.1267, 0.7889, 0.5057, 0.8588, 0.4669, 0.0687, 0.6623, 0.3681, 0.8152, 0.9004, 0.0822, 0.3652];
 /**
  * @fileOverview Contains the core classes for EyeDraw
@@ -431,7 +433,7 @@ ED.Drawing = function(_canvas, _eye, _idSuffix, _isEditable, _options) {
 	this.imageArray['MeshworkPatternMedium'] = new Image();
 	this.imageArray['MeshworkPatternHeavy'] = new Image();
 	this.imageArray['NewVesselPattern'] = new Image();
-	this.imageArray['OedemaPattern'] = new Image();
+	this.imageArray['13'] = new Image();
 	this.imageArray['OedemaPatternBullous'] = new Image();
 	this.imageArray['BrownSpotPattern'] = new Image();
 
@@ -5414,6 +5416,37 @@ ED.Doodle.prototype.json = function() {
  * @param {String} _colour String containing colour
  */
 ED.Doodle.prototype.drawSpot = function(_ctx, _x, _y, _r, _colour) {
+	_ctx.save();
+	_ctx.beginPath();
+	_ctx.arc(_x, _y, _r, 0, Math.PI * 2, true);
+	_ctx.fillStyle = _colour;
+	_ctx.strokeStyle = _colour;
+	_ctx.lineWidth = 0;
+	_ctx.fill();
+	_ctx.stroke();
+	_ctx.restore();
+}
+ED.Doodle.prototype.drawSpot1 = function(_ctx, _x, _y, _r, _colour) {
+	_ctx.save();
+	_ctx.beginPath();
+	_ctx.arc(_x, _y, _r, 0, Math.PI * 2, true);
+	_ctx.fillStyle = _colour;
+	_ctx.strokeStyle = _colour;
+	_ctx.lineWidth = 0;
+	_ctx.fill();
+	_ctx.stroke();
+	_ctx.restore();
+	_ctx.beginPath();
+_ctx.arc(_x,_y,_r,0.5*Math.PI,1.0*Math.PI,false);
+_ctx.lineWidth=2;
+_ctx.strokeStyle = "brown";
+_ctx.stroke();
+//_ctx.restore();
+}
+//ED.Doodle.prototype.drawbeizer = function(_ctx, _x, _y, _r, _colour) {
+//_ctx.bezierCurveTo(20,100,200,100,200,20);
+//}
+ED.Doodle.prototype.drawcurve = function(_ctx, _x, _y, _r, _colour) {
 	_ctx.save();
 	_ctx.beginPath();
 	_ctx.arc(_x, _y, _r, 0, Math.PI * 2, true);
@@ -15951,7 +15984,7 @@ ED.AntSeg3.prototype.setPropertyDefaults = function() {
  * Use the setParameter function for derived parameters, as this will also update dependent variables
  */
 ED.AntSeg3.prototype.setParameterDefaults = function() {
-	this.setParameterFromString('pupilSize', 'Medium');
+	this.setParameterFromString('pupilSize', 'Large');
 	//this.setParameterFromString('pxe', 'false');
 }
 
@@ -16813,6 +16846,26 @@ ED.AntSeg1.prototype.description = function() {
 
 	return returnValue;
 }
+
+
+/**
+ * OpenEyes
+ *
+ * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
+ * (C) OpenEyes Foundation, 2011-2013
+ * This file is part of OpenEyes.
+ * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with OpenEyes in a file titled COPYING. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package OpenEyes
+ * @link http://www.openeyes.org.uk
+ * @author OpenEyes <info@openeyes.org.uk>
+ * @copyright Copyright (c) 2008-2011, Moorfields Eye Hospital NHS Foundation Trust
+ * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
+ * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
+ */
+
 /**
  * bullae
  *
@@ -16838,6 +16891,22 @@ ED.bullae = function(_drawing, _parameterJSON) {
 ED.bullae.prototype = new ED.Doodle;
 ED.bullae.prototype.constructor = ED.bullae;
 ED.bullae.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.bullae.prototype.setHandles = function() {
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, true);
+}
+
+/**
+ * Set default properties
+ */
+ED.bullae.prototype.setPropertyDefaults = function() {
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+1, +2);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+1, +2);
+}
 
 /**
  * Sets default parameters
@@ -16890,8 +16959,13 @@ ED.bullae.prototype.draw = function(_point) {
 	return this.isClicked;
 }
 
-ED.bullae.prototype.description = function() {
-	return "bullae";
+/**
+ * Returns a String which, if not empty, determines the root descriptions of multiple instances of the doodle
+ *
+ * @returns {String} Group description
+ */
+ED.bullae.prototype.groupDescription = function() {
+	return "Bullae";
 }
 
 /**
@@ -21598,24 +21672,6 @@ ED.CornealInlay.prototype.description = function() {
 }
 
 /**
- * OpenEyes
- *
- * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
- * (C) OpenEyes Foundation, 2011-2013
- * This file is part of OpenEyes.
- * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
- * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with OpenEyes in a file titled COPYING. If not, see <http://www.gnu.org/licenses/>.
- *
- * @package OpenEyes
- * @link http://www.openeyes.org.uk
- * @author OpenEyes <info@openeyes.org.uk>
- * @copyright Copyright (c) 2008-2011, Moorfields Eye Hospital NHS Foundation Trust
- * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
- * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
- */
-
-/**
  * Corneal Oedema
  *
  * @class CornealOedema
@@ -21623,7 +21679,8 @@ ED.CornealInlay.prototype.description = function() {
  * @param {Drawing} _drawing
  * @param {Object} _parameterJSON
  */
-ED.CornealOedema = function(_drawing, _parameterJSON) {
+ED.CornealOedema = function(_drawing, _parameterJSON) 
+{
 	// Set classname
 	this.className = "CornealOedema";
 
@@ -21770,12 +21827,13 @@ ED.CornealOedema.prototype.draw = function(_point) {
 
 	// Set attributes
 	ctx.lineWidth = 4;
-	switch (this.intensity) {
+	switch (this.intensity) 
+	{
 		case 'Mild':
 			ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
 			break;
 		case 'Moderate':
-			ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['OedemaPattern'], 'repeat');
+			ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['13'], 'repeat');
 			break;
 		case 'Severe':
 			ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['OedemaPatternBullous'], 'repeat');
@@ -21787,7 +21845,8 @@ ED.CornealOedema.prototype.draw = function(_point) {
 	this.drawBoundary(_point);
 
 	// Non boundary paths
-	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) 
+	{
 		if (false) {
 			var ptrn = ctx.createPattern(this.drawing.imageArray['OedemaPatternBullous'], 'repeat');
 			ctx.fillStyle = ptrn;
@@ -22036,7 +22095,7 @@ ED.CornealStriae.superclass = ED.Doodle.prototype;
  * Sets default dragging attributes
  */
 ED.CornealStriae.prototype.setPropertyDefaults = function() {
-	this.isMoveable = false;
+	this.isMoveable = true;
 	this.isRotatable = false;
 }
 
@@ -22071,10 +22130,10 @@ ED.CornealStriae.prototype.draw = function(_point) {
 
 	// Non-boundary paths
 	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
-		var st = -150;
-		var d = 30;
-		var w = 30;
-		var s = 60;
+		var st =-40;
+		var d = 10;
+		var w = 15;
+		var s = 20;
 		var x = -1*s;
 
 		ctx.beginPath();
@@ -22087,7 +22146,7 @@ ED.CornealStriae.prototype.draw = function(_point) {
 			//ctx.bezierCurveTo(x + s * i + w, st + 10 * d, x + s * i + w, st + 11 * d, x + s * i, st + 12 * d);
 		}
 
-		ctx.lineWidth = 10;
+		ctx.lineWidth = 6;
 		ctx.strokeStyle = "rgba(0,0,0,0.6)";
 		ctx.stroke();
 	}
@@ -29162,7 +29221,7 @@ ED.KeraticPrecipitates.superclass = ED.Doodle.prototype;
  * Sets handle attributes
  */
 ED.KeraticPrecipitates.prototype.setHandles = function() {
-	//this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
 	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
 }
 
@@ -29170,16 +29229,15 @@ ED.KeraticPrecipitates.prototype.setHandles = function() {
  * Sets default dragging attributes
  */
 ED.KeraticPrecipitates.prototype.setPropertyDefaults = function() {
-	this.isRotatable = false;
-	this.isUnique = true;
+	this.isRotatable =true;
+	this.isUnique = false;
 
 	// Update component of validation array for simple parameters
-	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +40);
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, 0);
 	this.parameterValidationArray['apexY']['range'].setMinAndMax(-160, +0);
-	//this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
-	//this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
 }
-
 /**
  * Sets default parameters (Only called for new doodles)
  * Use the setParameter function for derived parameters, as this will also update dependent variables
@@ -29230,13 +29288,15 @@ ED.KeraticPrecipitates.prototype.draw = function(_point) {
 		var fill = "rgba(255,255,0,1)";
 		//var fill = "rgba(210, 210, 210, 0.5)";
 
-		var dr = 10 / this.scaleX;
+		var dr = 5/ this.scaleX;
 
 		var p = new ED.Point(0, 0);
-		var n = 40 + Math.abs(Math.floor(this.apexY / 2));
-		for (var i = 0; i < n; i++) {
-			p.setWithPolars(r * ED.randomArray[i], 2 * Math.PI * ED.randomArray[i + 100]);
-			this.drawSpot(ctx, p.x, p.y, dr, fill);
+		var n = 25 + Math.abs(Math.floor(this.apexY / 2));
+		for (var i = 0; i < n;i++) {
+			p.setWithPolars(0.001*r*ED.randomArray1[i],2 * Math.PI * ED.randomArray[i +50]);
+			//p.setWithPolars(r * ED.randomArray[i], 2 * Math.PI * ED.randomArray[i +50]);
+			
+			this.drawSpot1(ctx, p.x, p.y, dr, fill);
 		}
 	}
 
@@ -46230,3 +46290,110 @@ ED.VenousDilatation.prototype.draw = function(_point) {
 ED.VenousDilatation.prototype.groupDescription = function() {
 	return "Venous Dilatation at " + this.quadrant();
 }
+
+ED.stromaledema = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "stromaledema";
+
+	// Saved parameters
+	this.savedParameterArray = ['originX', 'originY', 'apexY', 'scaleX', 'scaleY'];
+
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.stromaledema.prototype = new ED.Doodle;
+ED.stromaledema.prototype.constructor = ED.stromaledema;
+ED.stromaledema.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.stromaledema.prototype.setHandles = function() {
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
+}
+
+/**
+ * Set default properties
+ */
+ED.stromaledema.prototype.setPropertyDefaults = function() {
+	this.isRotatable = false;
+	//this.isSqueezable = true;
+
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-100, +0);
+}
+
+/**
+ * Sets default parameters
+ */
+ED.stromaledema.prototype.setParameterDefaults = function() {
+	this.apexY = -100;
+	this.setOriginWithDisplacements(0, -100);
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.stromaledema.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.stromaledema.superclass.draw.call(this, _point);
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Radius of opacity
+	var ro = 200;
+
+	// Do a 360 arc
+	ctx.arc(0, 0, ro, 0, 2 * Math.PI, true);
+
+	// Opacity from apexY
+	var opacity = 0.3 + 0.6 * (ro + 2 * this.apexY) / ro;
+	ctx.fillStyle = "rgba(0, 255, 81," + opacity + ")";
+
+	// Set attributes
+	ctx.lineWidth = 0;
+	ctx.strokeStyle = "rgba(255, 0, 0, 0)";
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Non boundary paths
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {}
+
+	// Coordinates of handles (in canvas plane)
+	point = new ED.Point(0, 0);
+	point.setWithPolars(ro, Math.PI / 4);
+	this.handleArray[2].location = this.transform.transformPoint(point);
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.stromaledema.prototype.description = function() {
+	return "stromal edema";
+}
+
