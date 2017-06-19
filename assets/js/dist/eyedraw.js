@@ -5548,6 +5548,24 @@ ED.Doodle.prototype.drawLine = function(_ctx, _x1, _y1, _x2, _y2, _w, _colour) {
 	_ctx.stroke();
 	_ctx.restore();
 }
+ED.Doodle.prototype.DrawDottedLine = function DrawDottedLine(ctx,x1,y1,x2,y2,dotCount)
+            {
+            
+              var dx=x2-x1;
+              var dy=y2-y1;
+              var spaceX=dx/(dotCount-1);
+              var spaceY=dy/(dotCount-1);
+              var newX=x1;
+              var newY=y1;
+              for (var i=1;i<dotCount/2;i++){
+                      ctx.moveTo(newX,newY);
+                      newX+=spaceX;
+                      newY+=spaceY;    
+                      ctx.lineTo(newX,newY); 
+                       newX+=spaceX;
+                      newY+=spaceY
+               }
+            }
 
 /**
  * Draws a laser spot
@@ -8516,6 +8534,7 @@ ED.trans['CornealOedema'] = 'Drag to position<br/>Drag handle to change size';
 ED.trans['CornealStriae'] = '';
 ED.trans['CornealScar'] = 'Drag outer handle to change shape<br/>Drag inner handle to change density';
 ED.trans['CornealSuture'] = 'Drag to move';
+//ED.trans['LooseSuture'] = 'Drag to move';
 ED.trans['CorticalCataract'] = 'Drag to move<br/>Drag handle to change density';
 ED.trans['CottonWoolSpot'] = 'Drag to position<br/>Drag handle to change shape and size';
 ED.trans['CNV'] = 'Drag to move<br/>Drag handle to scale';
@@ -15910,12 +15929,12 @@ ED.AntSeg3 = function(_drawing, _parameterJSON) {
 	this.coloboma = false;
 	//this.colour = 'None';
 	this.ectropion = false;
-
+	this.sutures= 'none';
 	// Saved parameters
-	this.savedParameterArray = ['pupilSize', 'apexY', 'rotation', 'pxe', 'coloboma', 'ectropion'];
+	this.savedParameterArray = ['pupilSize', 'apexY', 'rotation', 'pxe', 'coloboma', 'ectropion','sutures'];
 
 	// Parameters in doodle control bar (parameter name: parameter label)
-	this.controlParameterArray = {'pupilSize':'Pupil size', 'pxe':'PXE', 'coloboma':'Coloboma', 'ectropion':'Ectropion uveae'};
+	this.controlParameterArray = {'pupilSize':'Pupil size', 'pxe':'PXE', 'coloboma':'Coloboma', 'ectropion':'Ectropion uveae','sutures':'no_of_sutures'};
 
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
@@ -15977,6 +15996,12 @@ ED.AntSeg3.prototype.setPropertyDefaults = function() {
 		type: 'bool',
 		display: true
 	};
+	this.parameterValidationArray['sutures']={
+		kind: 'derived',
+		type: 'string',
+		list: ['none','16','24'],
+		
+	}
 }
 
 /**
@@ -16138,6 +16163,7 @@ ED.AntSeg3.prototype.draw = function(_point) {
 			ctx.strokeStyle = "brown";
 			ctx.stroke();
 		}
+	
 	}
 
 	// Coordinates of handles (in canvas plane)
@@ -16195,7 +16221,7 @@ ED.AntSeg3.prototype.description = function() {
 	return returnValue;
 }
 
-///for new template i.e, anterior1
+///for new template i.e, anterior2
 
 
 
@@ -16203,21 +16229,6 @@ ED.AntSeg3.prototype.description = function() {
 ED.antseg2 = function(_drawing, _parameterJSON) {
 	// Set classname
 	this.className = "antseg2";
-
-	// Derived parameters
-	//this.pupilSize = 'Large';
-
-	// Other parameters
-	this.pxe = false;
-	this.coloboma = false;
-	//this.colour = 'None';
-	this.ectropion = false;
-
-	// Saved parameters
-	this.savedParameterArray = ['apexY', 'rotation', 'pxe', 'coloboma', 'ectropion'];
-
-	// Parameters in doodle control bar (parameter name: parameter label)
-	this.controlParameterArray = {'pxe':'PXE', 'coloboma':'Coloboma', 'ectropion':'Ectropion uveae'};
 
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
@@ -16246,51 +16257,6 @@ ED.antseg2.prototype.setPropertyDefaults = function() {
 	this.isMoveable = false;
 	this.isRotatable = true;
 	this.isUnique = true;
-
-	// Update component of validation array for simple parameters (enable 2D control by adding -50,+50 apexX range
-	this.parameterValidationArray['apexX']['range'].setMinAndMax(0, 0);
-	this.parameterValidationArray['apexY']['range'].setMinAndMax(0, 0);
-
-	// Add complete validation arrays for derived parameters
-
-	this.parameterValidationArray['pxe'] = {
-		kind: 'derived',
-		type: 'bool',
-		display: true
-	};
-	this.parameterValidationArray['coloboma'] = {
-		kind: 'derived',
-		type: 'bool',
-		display: true
-	};
-
-	this.parameterValidationArray['ectropion'] = {
-		kind: 'derived',
-		type: 'bool',
-		display: true
-	};
-}
-
-/**
- * Calculates values of dependent parameters. This function embodies the relationship between simple and derived parameters
- * The returned parameters are animated if the 'animate' property in the parameterValidationArray is set to true
- *
- * @param {String} _parameter Name of parameter that has changed
- * @value {Undefined} _value Value of parameter to calculate
- * @returns {Array} Associative array of values of dependent parameters
- */
-ED.antseg2.prototype.dependentParameterValues = function(_parameter, _value) {
-	var returnArray = new Array();
-
-	switch (_parameter) {
-
-		case 'coloboma':
-			this.isRotatable = _value == "true"?true:false;
-			this.rotation = _value == "true"?this.rotation:0;
-			break;
-	}
-
-	return returnArray;
 }
 
 /**
@@ -16328,66 +16294,16 @@ ED.antseg2.prototype.draw = function(_point) {
            var a=((Math.sqrt(3))*ro)/2;
            var b=ro/2;
            var c=ro/18;
-	DrawDottedLine(a,b,a,-b,c);
-	DrawDottedLine(b,-a,-b,-a,c);
-	DrawDottedLine(b,a,-b,a,c);
-	DrawDottedLine(-a,b,-a,-b,c);
+	this.DrawDottedLine(ctx,a,b,a,-b,c);
+	this.DrawDottedLine(ctx,b,-a,-b,-a,c);
+	this.DrawDottedLine(ctx,b,a,-b,a,c);
+	this.DrawDottedLine(ctx,-a,b,-a,-b,c);
 	   var d=ro/11;
-	DrawDottedLine(b,a,b,-a,d);
-	DrawDottedLine(-b,a,-b,-a,d);
-	DrawDottedLine(a,b,-a,b,d);
-	DrawDottedLine(a,-b,-a,-b,d);
-
-            function DrawDottedLine(x1,y1,x2,y2,dotCount)
-            {
-            
-              var dx=x2-x1;
-              var dy=y2-y1;
-              var spaceX=dx/(dotCount-1);
-              var spaceY=dy/(dotCount-1);
-              var newX=x1;
-              var newY=y1;
-              for (var i=1;i<dotCount/2;i++){
-                      ctx.moveTo(newX,newY);
-                      newX+=spaceX;
-                      newY+=spaceY;    
-                      ctx.lineTo(newX,newY); 
-                       newX+=spaceX;
-                      newY+=spaceY
-               }
-            }
-
-
+	this.DrawDottedLine(ctx,b,a,b,-a,d);
+	this.DrawDottedLine(ctx,-b,a,-b,-a,d);
+	this.DrawDottedLine(ctx,a,b,-a,b,d);
+	this.DrawDottedLine(ctx,a,-b,-a,-b,d);
 	
-	if (!this.coloboma) {
-		// Move to inner circle
-		ctx.moveTo(ri, 0);
-
-		// Arc round edge of pupil
-		ctx.arc(0, 0, ri, arcEnd, arcStart, false);
-	}
-	else {
-		// Angular size of coloboma
-		var colAngle = (Math.PI/3) * 280/ri;
-		var colAngleOuter = Math.PI/6;
-		var rimSize = 20;
-
-		var p1 = new ED.Point(0,0);
-		p1.setWithPolars(ri, Math.PI + colAngle/2);
-		var p2 = new ED.Point(0,0);
-		p2.setWithPolars(ro - rimSize, Math.PI + colAngleOuter/2);
-
-		// Coloboma
-		ctx.moveTo(-p2.x, p2.y);
-		ctx.arc(0, 0, ro - rimSize, Math.PI/2 - colAngleOuter/2, Math.PI/2 + colAngleOuter/2, false);
-
-		// Arc round edge of pupil
-		ctx.arc(0, 0, ri, Math.PI/2 + colAngle/2, Math.PI/2 - colAngle/2, false);
-
-		// Back to start
-		ctx.lineTo(-p2.x, p2.y);
-	}
-
 	// Edge attributes
 	ctx.lineWidth = 4;
 	ctx.strokeStyle = "gray";
@@ -16398,49 +16314,7 @@ ED.antseg2.prototype.draw = function(_point) {
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
 
-	// Other paths and drawing here
-	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
-		// Pseudo exfoliation
-		if (this.pxe) {
-			ctx.lineWidth = 8;
-			ctx.strokeStyle = "darkgray";
-
-			var rl = ri * 0.8;
-			var rp = ri * 1.05;
-			var segments = 36;
-			var i;
-			var phi = Math.PI * 2 / segments;
-
-			// Loop around alternating segments
-			for (i = 0; i < segments; i++) {
-				// PXE on lens
-				ctx.beginPath();
-				ctx.arc(0, 0, rl, i * phi, i * phi + phi / 2, false);
-				ctx.stroke();
-
-				// PXE on pupil
-				ctx.beginPath();
-				ctx.arc(0, 0, rp, i * phi, i * phi + phi / 2, false);
-				ctx.stroke();
-			}
-		}
-
-		// Ectropion uveae
-		if (this.ectropion) {
-			ctx.beginPath();
-			if (this.coloboma) {
-				ctx.arc(0, 0, ri, Math.PI/2 - colAngle/2, Math.PI/2 + colAngle/2, true);
-			}
-			else {
-				ctx.arc(0, 0, ri + 16, arcStart, arcEnd, true);
-			}
-			ctx.lineWidth = 32;
-			ctx.lineCap = "round";
-			ctx.strokeStyle = "brown";
-			ctx.stroke();
-		}
-	}
-
+	
 	// Coordinates of handles (in canvas plane)
 	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
 
@@ -16459,61 +16333,6 @@ ED.antseg2.prototype.draw = function(_point) {
 ED.antseg2.prototype.description = function() {
 	var returnValue = "";
 
-	// Pupil size and coloboma
-	if (this.pupilSize != 'Large') returnValue += this.pupilSize.toLowerCase() + " pupil, ";
-
-	// Coloboma
-	if (this.coloboma) returnValue += "coloboma at " + this.clockHour(6) + " o'clock, ";
-
-	// Ectopion
-	if (this.ectropion) returnValue += "ectropion uveae, ";
-
-	// PXE
-	if (this.pxe) returnValue += "pseudoexfoliation, ";
-	
-	// Empty report so far
-	if (returnValue.length == 0 && this.drawing.doodleArray.length == 1) {
-		// Is lens present and normal?
-		/*
-		var doodle = this.drawing.lastDoodleOfClass('Lens');
-		if (doodle) {
-			var lensDescription = doodle.description();
-			if (lensDescription.length == 0) {
-				returnValue = "Anterior segment normal, ";
-			}
-		}
-		else {
-			returnValue = "Aphakic, ";
-		}
-		*/
-		returnValue = "No abnormality";
-	}
-
-	// Remove final comma and space and capitalise first letter
-	returnValue = returnValue.replace(/, +$/, '');
-	returnValue = returnValue.charAt(0).toUpperCase() + returnValue.slice(1);
-
-	return returnValue;
-}
-/**
- * Returns a string containing a text description of the doodle
- *
- * @returns {String} Description of doodle
- */
-ED.antseg2.prototype.description = function() {
-	var returnValue = "";
-
-	// Pupil size and coloboma
-	if (this.pupilSize != 'Large') returnValue += this.pupilSize.toLowerCase() + " pupil, ";
-
-	// Coloboma
-	if (this.coloboma) returnValue += "coloboma at " + this.clockHour(6) + " o'clock, ";
-
-	// Ectopion
-	if (this.ectropion) returnValue += "ectropion uveae, ";
-
-	// PXE
-	if (this.pxe) returnValue += "pseudoexfoliation, ";
 	
 	// Empty report so far
 	if (returnValue.length == 0 && this.drawing.doodleArray.length == 1) {
@@ -16549,21 +16368,6 @@ ED.AntSeg1 = function(_drawing, _parameterJSON) {
 	// Set classname
 	this.className = "AntSeg1";
 
-	// Derived parameters
-	//this.pupilSize = 'Large';
-
-	// Other parameters
-	this.pxe = false;
-	this.coloboma = false;
-	//this.colour = 'None';
-	this.ectropion = false;
-
-	// Saved parameters
-	this.savedParameterArray = ['apexY', 'rotation', 'pxe', 'coloboma', 'ectropion'];
-
-	// Parameters in doodle control bar (parameter name: parameter label)
-	this.controlParameterArray = {'pxe':'PXE', 'coloboma':'Coloboma', 'ectropion':'Ectropion uveae'};
-
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
 }
@@ -16598,45 +16402,9 @@ ED.AntSeg1.prototype.setPropertyDefaults = function() {
 
 	// Add complete validation arrays for derived parameters
 
-	this.parameterValidationArray['pxe'] = {
-		kind: 'derived',
-		type: 'bool',
-		display: true
-	};
-	this.parameterValidationArray['coloboma'] = {
-		kind: 'derived',
-		type: 'bool',
-		display: true
-	};
-
-	this.parameterValidationArray['ectropion'] = {
-		kind: 'derived',
-		type: 'bool',
-		display: true
-	};
+	
 }
 
-/**
- * Calculates values of dependent parameters. This function embodies the relationship between simple and derived parameters
- * The returned parameters are animated if the 'animate' property in the parameterValidationArray is set to true
- *
- * @param {String} _parameter Name of parameter that has changed
- * @value {Undefined} _value Value of parameter to calculate
- * @returns {Array} Associative array of values of dependent parameters
- */
-ED.AntSeg1.prototype.dependentParameterValues = function(_parameter, _value) {
-	var returnArray = new Array();
-
-	switch (_parameter) {
-
-		case 'coloboma':
-			this.isRotatable = _value == "true"?true:false;
-			this.rotation = _value == "true"?this.rotation:0;
-			break;
-	}
-
-	return returnArray;
-}
 
 /**
  * Draws doodle or performs a hit test if a Point parameter is passed
@@ -16664,36 +16432,6 @@ ED.AntSeg1.prototype.draw = function(_point) {
 
 	// Do a 360 arc
 	ctx.arc(0, 0, ro, arcStart, arcEnd, true);
-	
-
-	if (!this.coloboma) {
-		// Move to inner circle
-		ctx.moveTo(ri, 0);
-
-		// Arc round edge of pupil
-		ctx.arc(0, 0, ri, arcEnd, arcStart, false);
-	}
-	else {
-		// Angular size of coloboma
-		var colAngle = (Math.PI/3) * 280/ri;
-		var colAngleOuter = Math.PI/6;
-		var rimSize = 20;
-
-		var p1 = new ED.Point(0,0);
-		p1.setWithPolars(ri, Math.PI + colAngle/2);
-		var p2 = new ED.Point(0,0);
-		p2.setWithPolars(ro - rimSize, Math.PI + colAngleOuter/2);
-
-		// Coloboma
-		ctx.moveTo(-p2.x, p2.y);
-		ctx.arc(0, 0, ro - rimSize, Math.PI/2 - colAngleOuter/2, Math.PI/2 + colAngleOuter/2, false);
-
-		// Arc round edge of pupil
-		ctx.arc(0, 0, ri, Math.PI/2 + colAngle/2, Math.PI/2 - colAngle/2, false);
-
-		// Back to start
-		ctx.lineTo(-p2.x, p2.y);
-	}
 
 	// Edge attributes
 	ctx.lineWidth = 4;
@@ -16704,49 +16442,6 @@ ED.AntSeg1.prototype.draw = function(_point) {
 	
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
-
-	// Other paths and drawing here
-	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
-		// Pseudo exfoliation
-		if (this.pxe) {
-			ctx.lineWidth = 8;
-			ctx.strokeStyle = "darkgray";
-
-			var rl = ri * 0.8;
-			var rp = ri * 1.05;
-			var segments = 36;
-			var i;
-			var phi = Math.PI * 2 / segments;
-
-			// Loop around alternating segments
-			for (i = 0; i < segments; i++) {
-				// PXE on lens
-				ctx.beginPath();
-				ctx.arc(0, 0, rl, i * phi, i * phi + phi / 2, false);
-				ctx.stroke();
-
-				// PXE on pupil
-				ctx.beginPath();
-				ctx.arc(0, 0, rp, i * phi, i * phi + phi / 2, false);
-				ctx.stroke();
-			}
-		}
-
-		// Ectropion uveae
-		if (this.ectropion) {
-			ctx.beginPath();
-			if (this.coloboma) {
-				ctx.arc(0, 0, ri, Math.PI/2 - colAngle/2, Math.PI/2 + colAngle/2, true);
-			}
-			else {
-				ctx.arc(0, 0, ri + 16, arcStart, arcEnd, true);
-			}
-			ctx.lineWidth = 32;
-			ctx.lineCap = "round";
-			ctx.strokeStyle = "brown";
-			ctx.stroke();
-		}
-	}
 
 	// Coordinates of handles (in canvas plane)
 	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
@@ -16765,20 +16460,6 @@ ED.AntSeg1.prototype.draw = function(_point) {
  */
 ED.AntSeg1.prototype.description = function() {
 	var returnValue = "";
-
-	// Pupil size and coloboma
-	if (this.pupilSize != 'Large') returnValue += this.pupilSize.toLowerCase() + " pupil, ";
-
-	// Coloboma
-	if (this.coloboma) returnValue += "coloboma at " + this.clockHour(6) + " o'clock, ";
-
-	// Ectopion
-	if (this.ectropion) returnValue += "ectropion uveae, ";
-
-	// PXE
-	if (this.pxe) returnValue += "pseudoexfoliation, ";
-	
-	// Empty report so far
 	if (returnValue.length == 0 && this.drawing.doodleArray.length == 1) {
 		// Is lens present and normal?
 		/*
@@ -16802,51 +16483,6 @@ ED.AntSeg1.prototype.description = function() {
 
 	return returnValue;
 }
-/**
- * Returns a string containing a text description of the doodle
- *
- * @returns {String} Description of doodle
- */
-ED.AntSeg1.prototype.description = function() {
-	var returnValue = "";
-
-	// Pupil size and coloboma
-	if (this.pupilSize != 'Large') returnValue += this.pupilSize.toLowerCase() + " pupil, ";
-
-	// Coloboma
-	if (this.coloboma) returnValue += "coloboma at " + this.clockHour(6) + " o'clock, ";
-
-	// Ectopion
-	if (this.ectropion) returnValue += "ectropion uveae, ";
-
-	// PXE
-	if (this.pxe) returnValue += "pseudoexfoliation, ";
-	
-	// Empty report so far
-	if (returnValue.length == 0 && this.drawing.doodleArray.length == 1) {
-		// Is lens present and normal?
-		/*
-		var doodle = this.drawing.lastDoodleOfClass('Lens');
-		if (doodle) {
-			var lensDescription = doodle.description();
-			if (lensDescription.length == 0) {
-				returnValue = "Anterior segment normal, ";
-			}
-		}
-		else {
-			returnValue = "Aphakic, ";
-		}
-		*/
-		returnValue = "No abnormality";
-	}
-
-	// Remove final comma and space and capitalise first letter
-	returnValue = returnValue.replace(/, +$/, '');
-	returnValue = returnValue.charAt(0).toUpperCase() + returnValue.slice(1);
-
-	return returnValue;
-}
-
 
 /**
  * OpenEyes
@@ -20025,9 +19661,10 @@ ED.CiliaryInjection.prototype.draw = function(_point) {
 	ED.CiliaryInjection.superclass.draw.call(this, _point);
 
 	// Radii
-	var ro = 480;
-	var ri = 400;
+	var ro = 445;
+	var ri = 385;
 	var r = ri + (ro - ri) / 2;
+	var len=(ro-ri)/3;
 
 	// Calculate parameters for arcs
 	var theta = this.arc / 2;
@@ -20056,7 +19693,7 @@ ED.CiliaryInjection.prototype.draw = function(_point) {
 	ctx.fillStyle = "rgba(218,230,241,0)";
 
 	// Set line attributes
-	ctx.lineWidth = 4;
+	ctx.lineWidth = 3;
 
 	// Colour of outer line
 	ctx.strokeStyle = "rgba(218,230,241,0)";
@@ -20085,12 +19722,23 @@ ED.CiliaryInjection.prototype.draw = function(_point) {
 			sp.setWithPolars(ro, theta);
 			ep.setWithPolars(ri, theta);
 
-			ctx.moveTo(sp.x, sp.y);
-			ctx.lineTo(ep.x, ep.y);
+			ctx.moveTo(ep.x, ep.y);
+			
+			sp.setWithPolars(ro-2*len, theta);
+			ctx.bezierCurveTo(ep.x+20,ep.y+20,sp.x-20,sp.y-20,sp.x,sp.y);
+			
+			sp.setWithPolars(ro-len, theta);
+			ep.setWithPolars(ri+len, theta);
+			ctx.bezierCurveTo(ep.x+20,ep.y+20,sp.x-20,sp.y-20,sp.x,sp.y);
+			
+			sp.setWithPolars(ro, theta);
+			ep.setWithPolars(ri+len, theta);
+			ctx.bezierCurveTo(ep.x+20,ep.y+20,sp.x-20,sp.y-20,sp.x,sp.y);
+			//ctx.lineTo(ep.x, ep.y);
 		}
 
 		ctx.strokeStyle = "red";
-		ctx.lineWidth = 16;
+		ctx.lineWidth = 5;
 		ctx.stroke();
 	}
 
@@ -21371,11 +21019,11 @@ ED.CornealGraft = function(_drawing, _parameterJSON) {
 
 	// Private parameters
 	this.numberOfSutures = 16;
-	this.initialRadius = 320;
-	this.sutureLength = 60;
+	this.initialRadius = 380;
+	this.sutureLength = 80;
 
 	// Derived parameters
-	this.sutureType = 'Interrupted';
+	this.sutureType = '16 sutures';
 	this.opaque = false;
 
 	// Saved parameters
@@ -21416,7 +21064,7 @@ ED.CornealGraft.prototype.setPropertyDefaults = function() {
 	this.parameterValidationArray['sutureType'] = {
 		kind: 'derived',
 		type: 'string',
-		list: ['Interrupted', 'Continuous', 'None'],
+		list: ['16 sutures','24 sutures', 'Continuous', 'None'],
 		animate: false
 	};
 	this.parameterValidationArray['opaque'] = {
@@ -21462,7 +21110,7 @@ ED.CornealGraft.prototype.draw = function(_point) {
 	ctx.arc(0, 0, ri, 0, Math.PI * 2, true);
 
 	// Set attributes
-	ctx.lineWidth = 4;
+	ctx.lineWidth = 2;
 	ctx.fillStyle = "rgba(255, 255, 255, 0)";
 	ctx.strokeStyle = ctx.fillStyle
 
@@ -21483,6 +21131,14 @@ ED.CornealGraft.prototype.draw = function(_point) {
 
 		// Sutures
 		ctx.beginPath();
+		
+		if (this.sutureType == '16 sutures') {
+					this.numberOfSutures=16;
+				}
+				else if(this.sutureType == '24 sutures'){
+					this.numberOfSutures=24;
+				}
+				
 		for (var i = 0; i < this.numberOfSutures; i++) {
 			// Suture points
 			var phi = i * 2 * Math.PI/this.numberOfSutures;
@@ -21490,7 +21146,13 @@ ED.CornealGraft.prototype.draw = function(_point) {
 			p1.setWithPolars(ri, phi);
 			var p2 = new ED.Point(0,0);
 			p2.setWithPolars(ro, phi);
-
+				var p3=new ED.Point(0,0);
+				var p4=new ED.Point(0,0);
+				var p5=new ED.Point(0,0);
+				p3.setWithPolars(ri+10,phi-0.04);
+				p4.setWithPolars(ri+20,phi);
+				p5.setWithPolars(ri+30,phi-0.035);
+				
 			// No sutures
 			if (this.sutureType == 'None') {
 				this.drawSpot(ctx, p1.x, p1.y, 3, "gray");
@@ -21502,8 +21164,14 @@ ED.CornealGraft.prototype.draw = function(_point) {
 				ctx.moveTo(p1.x, p1.y);
 			}
 			else {
-				if (this.sutureType == 'Interrupted') {
+				if (this.sutureType == '16 sutures') {
+					this.numberOfSutures=16;
 					ctx.moveTo(p1.x, p1.y);
+					
+				}
+				else if(this.sutureType == '24 sutures'){
+					this.numberOfSutures=24;
+					ctx.moveTo(p1.x,p1.y);
 				}
 				else if (this.sutureType == 'Continuous') {
 					ctx.lineTo(p1.x, p1.y);
@@ -21513,16 +21181,23 @@ ED.CornealGraft.prototype.draw = function(_point) {
 			// Line to outer point
 			if (this.sutureType != 'None') {
 				ctx.lineTo(p2.x, p2.y);
+				ctx.moveTo(p3.x,p3.y);
+				ctx.lineTo(p4.x,p4.y);				
+				ctx.lineTo(p5.x,p5.y);
+				ctx.strokeStyle = "rgba(0,0,0,1)";
+				ctx.stroke();
+				this.drawSpot(ctx,p4.x,p4.y,4,"black");
 			}
 		}
 
 		// Put in last link
 		if (this.sutureType == 'Continuous') {
-			ctx.closePath();
+			p1.setWithPolars(ri,0);
+			ctx.lineTo(p1.x,p1.y);
 		}
 
 		// Draw sutures
-		ctx.strokeStyle = "gray";
+		ctx.strokeStyle = "rgba(0,0,0,1)";
 		ctx.stroke();
 	}
 
@@ -21833,7 +21508,14 @@ ED.CornealOedema.prototype.draw = function(_point) {
 			ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
 			break;
 		case 'Moderate':
-			ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['13'], 'repeat');
+			var grd=ctx.createRadialGradient(0,0,100,0,0,200);
+grd.addColorStop(0,"rgba(0,0,0,0.5");
+grd.addColorStop(1,"rgba(228,237,254,0.5)");
+//grd.createPattern(this.drawing.imageArray['13'],'repeat');
+ctx.fillStyle=grd;
+ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['13'], 'repeat');
+ctx.fillRect(-200,-200,400,400);
+			//ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['13'], 'repeat');
 			break;
 		case 'Severe':
 			ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['OedemaPatternBullous'], 'repeat');
@@ -21935,8 +21617,9 @@ ED.CornealScar.prototype.setHandles = function() {
  * Sets default dragging attributes
  */
 ED.CornealScar.prototype.setPropertyDefaults = function() {
-	this.isSqueezable = true;
+	this.isSqueezable =true;
 	this.isRotatable = false;
+	this.isMoveable = true;
 
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
@@ -21967,21 +21650,26 @@ ED.CornealScar.prototype.draw = function(_point) {
 	ED.CornealScar.superclass.draw.call(this, _point);
 
 	// Boundary path
-	ctx.beginPath();
+	//ctx.beginPath();
 
 	// CornealScar
 	var r = 100;
-	ctx.arc(0, 0, r, 0, Math.PI * 2, false);
-
-	// Close path
-	ctx.closePath();
+	//ctx.arc(0, 0, r, 0, Math.PI * 2, false);
 
 	// Create fill
-	var alpha = -this.apexY / 100;
-	ctx.fillStyle = "rgba(100,100,100," + alpha.toFixed(2) + ")";
+	var alpha = -this.apexY / 110;
+	//ctx.fillStyle = "rgba(100,100,100," + alpha.toFixed(2) + ")";
+	var grd=ctx.createRadialGradient(0,0,r,0,0,2*r);
+	grd.addColorStop(0,"rgba(0,0,0," + alpha.toFixed(2) + ")");
+	grd.addColorStop(1,"rgba(228,237,254,0.5)");
+	ctx.fillStyle=grd;
+	ctx.fillRect(-200,-200,400,400);
+	
+	// Close path
+	//ctx.closePath();
 
 	// Transparent stroke
-	ctx.strokeStyle = "rgba(100,100,100,0.0)";
+	//ctx.strokeStyle = "rgba(100,100,100,0.0)";
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
@@ -22031,7 +21719,6 @@ ED.CornealScar.prototype.description = function() {
 
 	return returnString;
 }
-
 /**
  * Returns the SnoMed code of the doodle
  *
@@ -22040,7 +21727,6 @@ ED.CornealScar.prototype.description = function() {
 ED.CornealScar.prototype.snomedCode = function() {
 	return 95726001;
 }
-
 /**
  * Returns a number indicating position in a hierarchy of diagnoses from 0 to 9 (highest)
  *
@@ -22049,7 +21735,6 @@ ED.CornealScar.prototype.snomedCode = function() {
 ED.CornealScar.prototype.diagnosticHierarchy = function() {
 	return 2;
 }
-
 /**
  * OpenEyes
  *
@@ -22169,8 +21854,80 @@ ED.CornealStriae.prototype.draw = function(_point) {
 ED.CornealStriae.prototype.description = function() {
 	return "Striate keratopathy";
 }
-
 /**
+new annotation
+* Loose suture
+* @classname loosesuture
+
+*/
+
+ED.LooseSuture = function( _drawing, _parameterJSON){
+	//set classname
+	this.className = "LooseSuture";
+	this.savedParameterArray=['radius','rotation'];
+	ED.Doodle.call(this,_drawing,_parameterJSON);
+	
+	}
+	
+	ED.LooseSuture.prototype=new ED.Doodle;
+	ED.LooseSuture.prototype.constructor=ED.LooseSuture;
+	ED.LooseSuture.superclass=ED.Doodle.prototype;
+
+	ED.LooseSuture.prototype.setPropertyDefaults=function(){
+		this.isScaleable=false;
+		this.isMoveable=false;
+	
+	}
+	ED.LooseSuture.prototype.setParameterDefaults=function(){
+		this.radius=380;
+		this.setRotationWithDisplacements(10,20);
+	
+	}
+	
+	ED.LooseSuture.prototype.draw=function(_point){
+		var ctx=this.drawing.context;
+		ED.LooseSuture.superclass.draw.call(this,_point);
+		
+	ctx.beginPath();
+
+	var r = this.radius;
+	ctx.rect(-60, -(r + 60), 120, 120);
+
+	ctx.closePath();
+
+	// Colour of fill
+	ctx.fillStyle = "rgba(255,255,255,0.0)";
+
+	// Set line attributes
+	ctx.lineWidth = 6;
+
+	// Colour of outer line is dark gray
+	ctx.strokeStyle = "rgba(120,120,120,0)";
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+	
+	if(this.drawFunctionMode==ED.drawFunctionMode.Draw){
+	
+		ctx.beginPath();
+		ctx.scale(0.75,1);
+		ctx.arc(0,-r,50,0,2*Math.PI);
+		ctx.lineWidth=2;
+		var color="rgba(0,0,0,1)";
+		ctx.strokeStyle = color;
+		ctx.stroke();
+	}
+	return this.isClicked;
+}
+
+ED.LooseSuture.prototype.description=function(){
+
+	var returnString="Loose suture at ";
+	returnString +=this.clockHour() + "'o clock";
+	return returnString;
+}
+
+/**	
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -22226,7 +21983,7 @@ ED.CornealSuture.prototype.setPropertyDefaults = function() {
  * Sets default parameters
  */
 ED.CornealSuture.prototype.setParameterDefaults = function() {
-	this.radius = 374;
+	this.radius = 380;
 	this.setRotationWithDisplacements(10, 20);
 }
 
@@ -22272,7 +22029,7 @@ ED.CornealSuture.prototype.draw = function(_point) {
 		ctx.lineTo(-10, -r + 30);
 
 		ctx.lineWidth = 2;
-		var colour = "rgba(0,0,0,1)"
+		var colour = "rgba(0,0,0,1)";
 		ctx.strokeStyle = colour;
 
 		ctx.stroke();
@@ -22283,7 +22040,7 @@ ED.CornealSuture.prototype.draw = function(_point) {
 
 	// Return value indicating successful hittest
 	return this.isClicked;
-}
+}  
 
 /**
  * Returns a string containing a text description of the doodle
@@ -27912,7 +27669,7 @@ ED.Hypopyon.prototype.draw = function(_point) {
 	ctx.closePath();
 
 	// Colour of fill
-	ctx.fillStyle = "rgba(221,209,171,1)";
+	ctx.fillStyle = "rgba(255,255,0,1)";
 
 	// Set line attributes
 	ctx.lineWidth = 1;
@@ -30157,12 +29914,12 @@ ED.LasikFlap.prototype.setPropertyDefaults = function() {
 	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.75, +1.00);
 	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.75, +1.00);
 
-	this.parameterValidationArray['gradeDLK'] = {
+	/*this.parameterValidationArray['gradeDLK'] = {
 		kind: 'other',
 		type: 'string',
 		list: ['None', 'Grade 1', 'Grade 2', 'Grade 3'],
 		animate: false
-	};
+	};*/
 }
 
 /**
@@ -30199,8 +29956,8 @@ ED.LasikFlap.prototype.draw = function(_point) {
 	ctx.arc(0, 0, r, arcStart, arcEnd, true);
 
 	// Close path to produce straight line
-	ctx.closePath();
-
+	//ctx.closePath();
+	this.DrawDottedLine(ctx,r*Math.cos(arcStart),r*Math.sin(arcStart),r*Math.cos(arcEnd),r*Math.sin(arcEnd),15);
 	// Create transparent fill pattern
 	ctx.fillStyle = "rgba(155,255,255,0)";
 
@@ -30212,7 +29969,7 @@ ED.LasikFlap.prototype.draw = function(_point) {
 	this.drawBoundary(_point);
 
 	// Non boundary drawing
-	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+	/*if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
 		ctx.beginPath();
 		ctx.arc(0, 0, r/2, 0, 2* Math.PI, true);
 		switch (this.gradeDLK) {
@@ -30230,7 +29987,7 @@ ED.LasikFlap.prototype.draw = function(_point) {
 				break;
 		}
 		ctx.fill();
-	}
+	}*/
 
 	// Coordinates of handles (in canvas plane)
 	var point = new ED.Point(0, 0)
