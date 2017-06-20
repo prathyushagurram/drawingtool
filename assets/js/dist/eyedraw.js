@@ -12844,6 +12844,7 @@ ED.ACIOL.prototype.draw = function(_point) {
 	ED.ACIOL.superclass.draw.call(this, _point);
 
 	// Boundary path
+	ctx.setLineDash([15,15]);
 	ctx.beginPath();
 
 	// Radius of IOL optic
@@ -16485,6 +16486,111 @@ ED.AntSeg1.prototype.description = function() {
 }
 
 /**
+ * Bandage contact lens
+ *
+ * @class BandageContactLens
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.BandageContactLens = function(_drawing, _parameterJSON) 
+{
+	// Set classname
+	this.className = "BandageContactLens";
+
+	// Private parameters
+	this.numberOfHandles = 4;
+	this.initialRadius = 410;
+
+	// Saved parameters
+	this.savedParameterArray = ['apexX', 'apexY','rotation'];
+
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.BandageContactLens.prototype = new ED.Doodle;
+ED.BandageContactLens.prototype.constructor = ED.BandageContactLens;
+ED.BandageContactLens.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.BandageContactLens.prototype.setHandles = function() {
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
+
+}
+
+/**
+ * Sets default properties
+ */
+ED.BandageContactLens.prototype.setPropertyDefaults = function() {
+	this.isRotatable = false;
+	this.isMoveable=false;
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-450, -385);
+
+}
+
+/**
+ * Sets default parameters
+ */
+ED.BandageContactLens.prototype.setParameterDefaults = function() {
+	this.apexY = -this.initialRadius;
+
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.BandageContactLens.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.BandageContactLens.superclass.draw.call(this, _point);
+
+	// Boundary path
+	ctx.setLineDash([15,15]);
+	ctx.beginPath();
+
+	// Round lesion
+	var r = Math.abs(this.apexY);
+	ctx.arc(0, 0, r, 0, Math.PI * 2, true);
+	ctx.fillStyle="rgba(0,0,0,0)";
+	
+	// Set attributes
+	ctx.lineWidth = 3;
+	ctx.strokeStyle="black";
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Coordinates of handles (in canvas plane)
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.BandageContactLens.prototype.description = function() {
+	return "Bandage contact lens";
+}
+
+/**
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -16539,6 +16645,7 @@ ED.bullae.prototype.setHandles = function() {
  * Set default properties
  */
 ED.bullae.prototype.setPropertyDefaults = function() {
+	
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+1, +2);
 	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+1, +2);
@@ -18516,6 +18623,7 @@ ED.CapsularTensionRing.prototype.draw = function(_point) {
 	ED.CapsularTensionRing.superclass.draw.call(this, _point);
 
 	// Boundary path
+	ctx.setLineDash([15,15]);
 	ctx.beginPath();
 
 	// Radii
@@ -21557,7 +21665,6 @@ ctx.fillRect(-200,-200,400,400);
 ED.CornealOedema.prototype.description = function() {
 	return "Corneal oedema";
 }
-
 /**
  * OpenEyes
  *
@@ -22229,7 +22336,7 @@ ED.CorticalCataract.prototype.draw = function(_point) {
 	// Set boundary path attributes
 	ctx.lineWidth = 4;
 	ctx.lineJoin = 'bevel';
-	ctx.fillStyle = "rgba(200,200,200,0.75)";
+	ctx.fillStyle = "rgba(160,82,45,0.65)";
 	ctx.strokeStyle = "rgba(200,200,200,0)";
 
 	// Draw boundary path (also hit testing)
@@ -25332,6 +25439,133 @@ ED.FocalLaser.prototype.draw = function(_point) {
 ED.FocalLaser.prototype.groupDescription = function() {
 	return "Focal laser";
 }
+/**
+ * CornealGuttate
+ *
+ * @class CornealGuttate
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.CornealGuttate = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "CornealGuttate";
+
+	// Saved parameters
+	this.savedParameterArray = ['apexX', 'apexY', 'scaleX', 'scaleY'];
+
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.CornealGuttate.prototype = new ED.Doodle;
+ED.CornealGuttate.prototype.constructor = ED.CornealGuttate;
+ED.CornealGuttate.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.CornealGuttate.prototype.setHandles = function() {
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
+}
+
+/**
+ * Sets default dragging attributes
+ */
+ED.CornealGuttate.prototype.setPropertyDefaults = function() {
+	this.isRotatable =true;
+	this.isUnique = false;
+
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, 0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-160, +0);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
+}
+/**
+ * Sets default parameters (Only called for new doodles)
+ * Use the setParameter function for derived parameters, as this will also update dependent variables
+ */
+ED.CornealGuttate.prototype.setParameterDefaults = function() {
+	// Hard drusen is displaced for Fundus, central for others
+	if (this.drawing.hasDoodleOfClass('Fundus')) {
+		this.originX = this.drawing.eye == ED.eye.Right ? -100 : 100;
+		this.scaleX = 0.5;
+		this.scaleY = 0.5;
+	}
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.CornealGuttate.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.CornealGuttate.superclass.draw.call(this, _point);
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Invisible boundary
+	var r = 100;
+	ctx.arc(0,0, r, 0, Math.PI * 2, true);
+
+	// Close path
+	ctx.closePath();
+
+	// Set line attributes
+	ctx.lineWidth = 0;
+	ctx.fillStyle = "rgba(0, 0, 0, 0)";
+	ctx.strokeStyle = "rgba(0, 0, 0, 0)";
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Non boundary paths
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Colours
+		var fill = "rgba(0,0,0,1)";
+		//var fill = "rgba(210, 210, 210, 0.5)";
+
+		var dr = 2/ this.scaleX;
+
+		var p = new ED.Point(0, 0);
+		var n = 25 + Math.abs(Math.floor(this.apexY / 2));
+		for (var i = 0; i < n;i++) {
+			p.setWithPolars(0.001*r*ED.randomArray1[i],2 * Math.PI * ED.randomArray[i +50]);
+			//p.setWithPolars(r * ED.randomArray[i], 2 * Math.PI * ED.randomArray[i +50]);
+			
+			this.drawSpot1(ctx, p.x, p.y, dr, fill);
+		}
+	}
+
+	// Coordinates of handles (in canvas plane)
+	this.handleArray[2].location = this.transform.transformPoint(new ED.Point(r * 0.7, -r * 0.7));
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.CornealGuttate.prototype.description = function() {
+	return "corneal guttate";
+}
 
 /**
  * OpenEyes
@@ -27931,6 +28165,7 @@ ED.IOL.prototype.draw = function(_point) {
 	ED.IOL.superclass.draw.call(this, _point);
 
 	// Boundary path
+	ctx.setLineDash([15,15]);
 	ctx.beginPath();
 
 	switch (this.type) {
@@ -30034,7 +30269,154 @@ ED.LasikFlap.prototype.description = function() {
 
 	return returnString;
 }
+/**
+new annotation
+* class Name:post PRK haze
 
+*/
+
+ED.PostPrkHaze = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "PostPrkHaze";
+
+	this.grade = 'Grade1';
+	// Saved parameters
+	this.savedParameterArray = ['originX', 'originY','apexX','apexY','grade'];
+
+	// Parameters in doodle control bar (parameter name: parameter label)
+	this.controlParameterArray = {'grade':'Grade'};
+
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+ED.PostPrkHaze.prototype = new ED.Doodle;
+ED.PostPrkHaze.prototype.constructor = ED.PostPrkHaze;
+ED.PostPrkHaze.superclass = ED.Doodle.prototype;
+
+ED.PostPrkHaze.prototype.setHandles = function(){
+	this.handleArray[4] = new ED.Doodle.Handle(null,true,ED.Mode.Apex,false);
+}
+
+ED.PostPrkHaze.prototype.setPropertyDefaults = function() {
+
+	this.isUnique=true;
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(+80, +380);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-0,+0);
+	this.parameterValidationArray['grade'] = {
+		kind: 'derived',
+		type: 'string',
+		list: ['Grade1','Grade2','Grade3','Grade4'],
+		animate: false
+	};
+
+}
+
+ED.PostPrkHaze.prototype.setParameterDefaults = function() {
+	this.apexX = 100;
+	this.apexY = 0;
+	this.setOriginWithDisplacements(0,150);
+}
+
+ED.PostPrkHaze.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.PostPrkHaze.superclass.draw.call(this, _point);
+	
+	var r = Math.sqrt(this.apexX * this.apexX + this.apexY * this.apexY);
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Do a 360 arc
+	ctx.arc(0, 0, r, 0, 2 * Math.PI, true);
+
+	// Set line attributes
+	
+	ctx.lineWidth = 3;
+	ctx.strokeStyle = "rgba(255,255,255,0)";
+	ctx.fillStyle = "rgba(255, 255, 255, 0)";
+	
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Non boundary drawing
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		
+		ctx.beginPath();
+		var d= 25;
+		var g =25;
+		switch (this.grade) {
+			case 'Grade1':
+			case 'Grade2':
+			
+			if(this.grade=='Grade2') g+=10;
+			else if(this.grade=='Grade1') g+=25;
+				for(var s=-1;s<2;s+=2){
+				for(var t=-1;t<2;t+=2){
+					for(var y=0;y<r;y+=g)
+					{	var l=this.xForY(r,y);
+						for(var x=0;x<l;x+=g)
+						{
+						 ctx.moveTo(s*x-7,t*y+7);
+						 ctx.lineTo(s*x+7,t*y-7);
+						 ctx.moveTo(s*x+7,t*y+7);
+						 ctx.lineTo(s*x-7,t*y-7);
+						}
+					}
+				}
+				}
+				break;
+			case 'Grade4':
+	
+			// for vertical lines
+				ctx.moveTo(0,-r);
+				ctx.lineTo(0,r);
+				for(var s=-1;s<2;s+=2){
+					for(var x=d;x<r;x+=d){
+						var y=this.xForY(r,x);
+						ctx.moveTo(s*x,-y);
+						ctx.lineTo(s*x,y);
+						
+						}
+					}
+
+			case 'Grade3':
+			//for horizontal lines
+				ctx.moveTo(-r,0);
+				ctx.lineTo(r,0);
+				for(var s=-1;s<2;s+=2){
+					for(var y=d;y<r;y+=d){
+						var x=this.xForY(r,y);
+						ctx.moveTo(-x,s*y);
+						ctx.lineTo(x,s*y);
+						
+						}
+					}
+				break;
+			}
+		ctx.lineWidth=3;
+		ctx.lineCap = "round";
+		ctx.strokeStyle ="rgba(0,0,0,0.75)";
+		ctx.stroke();	
+			
+		
+	}
+	
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+ED.PostPrkHaze.prototype.description=function()
+{
+	return " Post PRK Haze";
+}
 /**
  * OpenEyes
  *
@@ -30302,7 +30684,7 @@ ED.Lens.prototype.draw = function(_point) {
 			// Set boundary path attributes
 			ctx.lineWidth = 4;
 			ctx.lineJoin = 'bevel';
-			ctx.fillStyle = "rgba(200,200,200,0.75)";
+			ctx.fillStyle = "rgba(160,82,45,0.65)";
 			ctx.fill();
 		}
 
@@ -33351,6 +33733,7 @@ ED.PCIOL.prototype.draw = function(_point) {
 	ED.PCIOL.superclass.draw.call(this, _point);
 
 	// Boundary path
+	ctx.setLineDash([15,15]);
 	ctx.beginPath();
 
 	// Radius of IOL optic
@@ -41978,6 +42361,7 @@ ED.ToricPCIOL.prototype.draw = function(_point) {
 	ED.ToricPCIOL.superclass.draw.call(this, _point);
 
 	// Boundary path
+	ctx.setLineDash([15,15]);
 	ctx.beginPath();
 
 	// Radius of IOL optic
