@@ -21453,32 +21453,148 @@ ED.CornealInlay.prototype.description = function() {
 
 	return returnString;
 }
-
 /**
- * Corneal Oedema
+ * Microcystic Edema
  *
- * @class CornealOedema
+ * @class MicrocysticEdema
  * @property {String} className Name of doodle subclass
  * @param {Drawing} _drawing
  * @param {Object} _parameterJSON
  */
-ED.CornealOedema = function(_drawing, _parameterJSON) 
-{
+ED.MicrocysticEdema = function(_drawing, _parameterJSON) {
 	// Set classname
-	this.className = "CornealOedema";
-
-	// Private parameters
-	this.numberOfHandles = 4;
-	this.initialRadius = 360;
-
-	// Derived parameters
-	this.intensity = 'Mild';
+	this.className = "MicrocysticEdema";
 
 	// Saved parameters
-	this.savedParameterArray = ['originX', 'originY', 'apexX', 'apexY', 'rotation', 'intensity'];
+	this.savedParameterArray = ['originX', 'originY', 'apexX', 'apexY'];
 
-	// Parameters in doodle control bar (parameter name: parameter label)
-	this.controlParameterArray = {'intensity':'Intensity'};
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+
+	// Invariate parameters
+	//this.rotation = -Math.PI / 4;
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.MicrocysticEdema.prototype = new ED.Doodle;
+ED.MicrocysticEdema.prototype.constructor = ED.MicrocysticEdema;
+ED.MicrocysticEdema.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.MicrocysticEdema.prototype.setHandles = function() {
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
+}
+
+/**
+ * Set default properties
+ */
+ED.MicrocysticEdema.prototype.setPropertyDefaults = function() {
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(+80, +380);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-0, +0);
+}
+
+/**
+ * Sets default parameters (Only called for new doodles)
+ * Use the setParameter function for derived parameters, as this will also update dependent variables
+ */
+ED.MicrocysticEdema.prototype.setParameterDefaults = function() {
+
+	this.apexX = 100;
+	this.apexY = 0;
+
+	this.setOriginWithDisplacements(0, 150);
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.MicrocysticEdema.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.MicrocysticEdema.superclass.draw.call(this, _point);
+
+	// Exudate radius
+	var r = Math.sqrt(this.apexX * this.apexX + this.apexY * this.apexY);
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Exudate
+	ctx.arc(0, 0, r, 0, 2 * Math.PI, true);
+
+	// Set attributes
+	ctx.lineWidth = 3;
+	ctx.strokeStyle = "rgba(255, 255, 255, 0)";
+	ctx.fillStyle = "rgba(255, 255, 255, 0)";
+	ctx.closePath();
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Other paths and drawing here
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Start path
+		ctx.beginPath();
+
+		var g=60;
+		for(var s=-1;s<2;s+=2){
+				for(var t=-1;t<2;t+=2){
+					for(var y=0;y<r;y+=g)
+					{	var l=this.xForY(r,y);
+						for(var x=0;x<l;x+=g){
+						ctx.moveTo(s*x+15,t*y);
+						ctx.arc(s*x,t*y,15,0,2*Math.PI/6,true);
+						ctx.bezierCurveTo(s*x,t*y,s*x+5,t*y-2,s*x+15,t*y);
+						}
+					}
+				}
+			}
+		// Set attributes
+		ctx.lineWidth =5;
+		ctx.strokeStyle = "rgba(0,0,200,0.65)";
+		// Draw lines
+		ctx.stroke();
+	}
+
+	// Coordinates of handles (in canvas plane)
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+/**
+ * Returns a String which, if not empty, determines the root descriptions of multiple instances of the doodle
+ *
+ * @returns {String} Group description
+ */
+ED.MicrocysticEdema.prototype.description = function() {
+	return "Microcystic Edema ";
+}
+/**
+ * Stromal edema
+ *
+ * @class Stromal edema
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.StromalEdema = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "StromalEdema";
+
+	// Saved parameters
+	this.savedParameterArray = ['originX', 'originY', 'apexY', 'scaleX', 'scaleY'];
 
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
@@ -21487,74 +21603,40 @@ ED.CornealOedema = function(_drawing, _parameterJSON)
 /**
  * Sets superclass and constructor
  */
-ED.CornealOedema.prototype = new ED.Doodle;
-ED.CornealOedema.prototype.constructor = ED.CornealOedema;
-ED.CornealOedema.superclass = ED.Doodle.prototype;
+ED.StromalEdema.prototype = new ED.Doodle;
+ED.StromalEdema.prototype.constructor = ED.StromalEdema;
+ED.StromalEdema.superclass = ED.Doodle.prototype;
 
 /**
  * Sets handle attributes
  */
-ED.CornealOedema.prototype.setHandles = function() {
+ED.StromalEdema.prototype.setHandles = function() {
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
 	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
-	// Array of handles
-// 	for (var i = 0; i < this.numberOfHandles; i++) {
-// 		this.handleArray[i] = new ED.Doodle.Handle(null, true, ED.Mode.Handles, false);
-// 	}
 }
 
 /**
- * Sets default properties
+ * Sets default dragging attributes
  */
-ED.CornealOedema.prototype.setPropertyDefaults = function() {
+ED.StromalEdema.prototype.setPropertyDefaults = function() {
+	this.isSqueezable =true;
 	this.isRotatable = false;
+	this.isMoveable = true;
+
+	// Update component of validation array for simple parameters
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
-	this.parameterValidationArray['apexY']['range'].setMinAndMax(-380, -80);
-
-	// Add complete validation arrays for derived parameters
-	this.parameterValidationArray['intensity'] = {
-		kind: 'derived',
-		type: 'string',
-		list: ['Mild', 'Moderate', 'Severe'],
-		animate: false
-	};
-
-	/*
-	// Create ranges to constrain handles
-	this.handleVectorRangeArray = new Array();
-	for (var i = 0; i < this.numberOfHandles; i++) {
-		// Full circle in radians
-		var cir = 2 * Math.PI;
-
-		// Create a range object for each handle
-		var n = this.numberOfHandles;
-		var range = new Object;
-		range.length = new ED.Range(+50, +380);
-		range.angle = new ED.Range((((2 * n - 1) * cir / (2 * n)) + i * cir / n) % cir, ((1 * cir / (2 * n)) + i * cir / n) % cir);
-		this.handleVectorRangeArray[i] = range;
-	}
-	*/
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-100, -10);
 }
 
 /**
  * Sets default parameters
  */
-ED.CornealOedema.prototype.setParameterDefaults = function() {
-	this.apexY = -this.initialRadius;
+ED.StromalEdema.prototype.setParameterDefaults = function() {
+	this.apexY = -50;
+	this.scaleX = 0.7;
+	this.scaleY = 0.5;
 
-/*
-	// Create a squiggle to store the handles points
-	var squiggle = new ED.Squiggle(this, new ED.Colour(100, 100, 100, 1), 4, true);
-
-	// Add it to squiggle array
-	this.squiggleArray.push(squiggle);
-
-	// Populate with handles at equidistant points around circumference
-	for (var i = 0; i < this.numberOfHandles; i++) {
-		var point = new ED.Point(0, 0);
-		point.setWithPolars(this.initialRadius, i * 2 * Math.PI / this.numberOfHandles);
-		this.addPointToSquiggle(point);
-	}
-*/
+	this.setOriginWithDisplacements(0, 25);
 }
 
 /**
@@ -21562,93 +21644,53 @@ ED.CornealOedema.prototype.setParameterDefaults = function() {
  *
  * @param {Point} _point Optional point in canvas plane, passed if performing hit test
  */
-ED.CornealOedema.prototype.draw = function(_point) {
+ED.StromalEdema.prototype.draw = function(_point) {
 	// Get context
 	var ctx = this.drawing.context;
 
 	// Call draw method in superclass
-	ED.CornealOedema.superclass.draw.call(this, _point);
+	ED.StromalEdema.superclass.draw.call(this, _point);
 
 	// Boundary path
 	ctx.beginPath();
 
-	/*
-	// Bezier points
-	var fp;
-	var tp;
-	var cp1;
-	var cp2;
+	// StromalEdema
+	var r = 100;
+	ctx.arc(0, 0, 2*r, 0, Math.PI * 2, false);
 
-	// Angle of control point from radius line to point (this value makes path a circle Math.PI/12 for 8 points
-	var phi = 2 * Math.PI / (3 * this.numberOfHandles);
-
-	// Start curve
-	ctx.moveTo(this.squiggleArray[0].pointsArray[0].x, this.squiggleArray[0].pointsArray[0].y);
-
-	// Complete curve segments
-	for (var i = 0; i < this.numberOfHandles; i++) {
-		// From and to points
-		fp = this.squiggleArray[0].pointsArray[i];
-		var toIndex = (i < this.numberOfHandles - 1) ? i + 1 : 0;
-		tp = this.squiggleArray[0].pointsArray[toIndex];
-
-		// Control points
-		cp1 = fp.tangentialControlPoint(+phi);
-		cp2 = tp.tangentialControlPoint(-phi);
-
-		// Draw Bezier curve
-		ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, tp.x, tp.y);
-	}
-
+	// Create fill
+	var alpha = -this.apexY /110;
+	//ctx.fillStyle = "rgba(100,100,100," + alpha.toFixed(2) + ")";
+	var grd=ctx.createRadialGradient(0,0,r,0,0,2*r);
+	grd.addColorStop(0,"rgba(0,0,200," + alpha.toFixed(2) + ")");
+	grd.addColorStop(1,"rgba(228,237,254,0.5)");
+	ctx.fillStyle=grd;
+	ctx.fillRect(-200,-200,400,400);
+	
 	// Close path
 	ctx.closePath();
-	*/
 
-	// Round lesion
-	var r = Math.sqrt(this.apexX * this.apexX + this.apexY * this.apexY);
-	ctx.arc(0, 0, r, 0, Math.PI * 2, true);
-
-	// Set attributes
-	ctx.lineWidth = 4;
-	switch (this.intensity) 
-	{
-		case 'Mild':
-			ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
-			break;
-		case 'Moderate':
-			var grd=ctx.createRadialGradient(0,0,100,0,0,200);
-grd.addColorStop(0,"rgba(0,0,0,0.5");
-grd.addColorStop(1,"rgba(228,237,254,0.5)");
-//grd.createPattern(this.drawing.imageArray['13'],'repeat');
-ctx.fillStyle=grd;
-ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['13'], 'repeat');
-ctx.fillRect(-200,-200,400,400);
-			//ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['13'], 'repeat');
-			break;
-		case 'Severe':
-			ctx.fillStyle = ctx.createPattern(this.drawing.imageArray['OedemaPatternBullous'], 'repeat');
-			break;
-	}
-	ctx.strokeStyle = ctx.fillStyle;
+	// Transparent stroke
+	ctx.strokeStyle = "rgba(100,100,100,0.0)";
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
 
-	// Non boundary paths
-	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) 
-	{
-		if (false) {
-			var ptrn = ctx.createPattern(this.drawing.imageArray['OedemaPatternBullous'], 'repeat');
-			ctx.fillStyle = ptrn;
-			ctx.fill();
-		}
+	// Non-boundary paths
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Work out whether visual axis is involved
+		var centre = new ED.Point(0, 0);
+		var visualAxis = this.drawing.transform.transformPoint(centre);
+		var ctx = this.drawing.context;
+		if (ctx.isPointInPath(visualAxis.x, visualAxis.y)) this.isInVisualAxis = true;
+		else this.isInVisualAxis = false;
 	}
 
 	// Coordinates of handles (in canvas plane)
+	var point = new ED.Point(0, 0);
+	point.setWithPolars(r, Math.PI / 4);
+	this.handleArray[2].location = this.transform.transformPoint(point);
 	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
-// 	for (var i = 0; i < this.numberOfHandles; i++) {
-// 		this.handleArray[i].location = this.transform.transformPoint(this.squiggleArray[0].pointsArray[i]);
-// 	}
 
 	// Draw handles if selected
 	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
@@ -21656,14 +21698,13 @@ ctx.fillRect(-200,-200,400,400);
 	// Return value indicating successful hittest
 	return this.isClicked;
 }
-
 /**
  * Returns a string containing a text description of the doodle
  *
  * @returns {String} Description of doodle
  */
-ED.CornealOedema.prototype.description = function() {
-	return "Corneal oedema";
+ED.StromalEdema.prototype.description = function() {
+	return ",Stromal Edema";
 }
 /**
  * OpenEyes
@@ -21727,7 +21768,7 @@ ED.CornealScar.prototype.setPropertyDefaults = function() {
 	this.isSqueezable =true;
 	this.isRotatable = false;
 	this.isMoveable = true;
-
+	this.addToBack =true;
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
 	this.parameterValidationArray['apexY']['range'].setMinAndMax(-100, -10);
@@ -21757,26 +21798,26 @@ ED.CornealScar.prototype.draw = function(_point) {
 	ED.CornealScar.superclass.draw.call(this, _point);
 
 	// Boundary path
-	//ctx.beginPath();
+	ctx.beginPath();
 
 	// CornealScar
 	var r = 100;
-	//ctx.arc(0, 0, r, 0, Math.PI * 2, false);
+	ctx.arc(0, 0, 2*r, 0, Math.PI * 2, false);
 
 	// Create fill
 	var alpha = -this.apexY / 110;
 	//ctx.fillStyle = "rgba(100,100,100," + alpha.toFixed(2) + ")";
 	var grd=ctx.createRadialGradient(0,0,r,0,0,2*r);
 	grd.addColorStop(0,"rgba(0,0,0," + alpha.toFixed(2) + ")");
-	grd.addColorStop(1,"rgba(228,237,254,0.5)");
+	grd.addColorStop(1,"rgba(228,237,254,1)");
 	ctx.fillStyle=grd;
 	ctx.fillRect(-200,-200,400,400);
 	
 	// Close path
-	//ctx.closePath();
+	ctx.closePath();
 
 	// Transparent stroke
-	//ctx.strokeStyle = "rgba(100,100,100,0.0)";
+	ctx.strokeStyle = "rgba(228,237,254,1)";
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
@@ -27309,6 +27350,150 @@ ED.SubretinalPigments.prototype.groupDescription = function() {
 ED.SubretinalPigments.prototype.description = function() {
 	
 	return "in " + this.quadrant();
+}
+
+/**
+ * Infiltrate
+ * @author - prathyusha
+ * @class Infiltrate
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.Infiltrate = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "Infiltrate";
+
+	// Doodle specific property
+	this.isInVisualAxis = false;
+
+	// Saved parameters
+	this.savedParameterArray = ['originX', 'originY', 'apexY', 'scaleX', 'scaleY'];
+
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.Infiltrate.prototype = new ED.Doodle;
+ED.Infiltrate.prototype.constructor = ED.Infiltrate;
+ED.Infiltrate.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.Infiltrate.prototype.setHandles = function() {
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
+}
+
+/**
+ * Sets default dragging attributes
+ */
+ED.Infiltrate.prototype.setPropertyDefaults = function() {
+	this.isSqueezable =true;
+	this.isRotatable = false;
+	this.isMoveable = true;
+
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-100, -10);
+}
+
+/**
+ * Sets default parameters
+ */
+ED.Infiltrate.prototype.setParameterDefaults = function() {
+	this.apexY = -50;
+	this.scaleX = 0.7;
+	this.scaleY = 0.5;
+
+	this.setOriginWithDisplacements(0, 25);
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.Infiltrate.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.Infiltrate.superclass.draw.call(this, _point);
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Infiltrate
+	var r = 100;
+	ctx.arc(0, 0, 2*r, 0, Math.PI * 2, false);
+
+	// Create fill
+	var alpha = -this.apexY / 110;
+	//ctx.fillStyle = "rgba(100,100,100," + alpha.toFixed(2) + ")";
+	var grd=ctx.createRadialGradient(0,0,r,0,0,2*r);
+	grd.addColorStop(0,"rgba(250,220,0," + alpha.toFixed(2) + ")");
+	grd.addColorStop(1,"rgba(228,237,254,0.5)");
+	ctx.fillStyle=grd;
+	ctx.fillRect(-200,-200,400,400);
+	
+	// Close path
+	ctx.closePath();
+
+	// Transparent stroke
+	ctx.strokeStyle = "rgba(100,100,100,0.0)";
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Non-boundary paths
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Work out whether visual axis is involved
+		var centre = new ED.Point(0, 0);
+		var visualAxis = this.drawing.transform.transformPoint(centre);
+		var ctx = this.drawing.context;
+		if (ctx.isPointInPath(visualAxis.x, visualAxis.y)) this.isInVisualAxis = true;
+		else this.isInVisualAxis = false;
+	}
+
+	// Coordinates of handles (in canvas plane)
+	var point = new ED.Point(0, 0);
+	point.setWithPolars(r, Math.PI / 4);
+	this.handleArray[2].location = this.transform.transformPoint(point);
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.Infiltrate.prototype.description = function() {
+	var returnString = "";
+
+	// Calculate size
+	var averageScale = this.scaleX + this.scaleY;
+
+	// Arbitrary cutoffs
+	if (averageScale < 2) returnString = "Small ";
+	else if (averageScale < 4) returnString = "Medium ";
+	else returnString = "Large ";
+
+	returnString += "Infiltrate";
+
+	if (this.isInVisualAxis) returnString += " involving visual axis";
+
+	return returnString;
 }
 
 /**
@@ -46431,13 +46616,20 @@ ED.VenousDilatation.prototype.draw = function(_point) {
 ED.VenousDilatation.prototype.groupDescription = function() {
 	return "Venous Dilatation at " + this.quadrant();
 }
-
-ED.stromaledema = function(_drawing, _parameterJSON) {
+/**
+ * DM Folds
+ *
+ * @class DmFolds
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.DmFolds = function(_drawing, _parameterJSON) {
 	// Set classname
-	this.className = "stromaledema";
+	this.className = "DmFolds";
 
 	// Saved parameters
-	this.savedParameterArray = ['originX', 'originY', 'apexY', 'scaleX', 'scaleY'];
+	this.savedParameterArray = ['apexX', 'apexY', 'scaleX', 'scaleY'];
 
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
@@ -46446,36 +46638,42 @@ ED.stromaledema = function(_drawing, _parameterJSON) {
 /**
  * Sets superclass and constructor
  */
-ED.stromaledema.prototype = new ED.Doodle;
-ED.stromaledema.prototype.constructor = ED.stromaledema;
-ED.stromaledema.superclass = ED.Doodle.prototype;
+ED.DmFolds.prototype = new ED.Doodle;
+ED.DmFolds.prototype.constructor = ED.DmFolds;
+ED.DmFolds.superclass = ED.Doodle.prototype;
 
 /**
  * Sets handle attributes
  */
-ED.stromaledema.prototype.setHandles = function() {
+ED.DmFolds.prototype.setHandles = function() {
 	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
 	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
 }
 
 /**
- * Set default properties
+ * Sets default dragging attributes
  */
-ED.stromaledema.prototype.setPropertyDefaults = function() {
-	this.isRotatable = false;
-	//this.isSqueezable = true;
+ED.DmFolds.prototype.setPropertyDefaults = function() {
+	this.isRotatable =true;
+	this.isUnique = false;
 
 	// Update component of validation array for simple parameters
-	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
-	this.parameterValidationArray['apexY']['range'].setMinAndMax(-100, +0);
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, 0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-160, +0);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
 }
-
 /**
- * Sets default parameters
+ * Sets default parameters (Only called for new doodles)
+ * Use the setParameter function for derived parameters, as this will also update dependent variables
  */
-ED.stromaledema.prototype.setParameterDefaults = function() {
-	this.apexY = -100;
-	this.setOriginWithDisplacements(0, -100);
+ED.DmFolds.prototype.setParameterDefaults = function() {
+	// Hard drusen is displaced for Fundus, central for others
+	if (this.drawing.hasDoodleOfClass('Fundus')) {
+		this.originX = this.drawing.eye == ED.eye.Right ? -100 : 100;
+		this.scaleX = 0.5;
+		this.scaleY = 0.5;
+	}
 }
 
 /**
@@ -46483,58 +46681,65 @@ ED.stromaledema.prototype.setParameterDefaults = function() {
  *
  * @param {Point} _point Optional point in canvas plane, passed if performing hit test
  */
-ED.stromaledema.prototype.draw = function(_point) {
+ED.DmFolds.prototype.draw = function(_point) {
 	// Get context
 	var ctx = this.drawing.context;
 
 	// Call draw method in superclass
-	ED.stromaledema.superclass.draw.call(this, _point);
+	ED.DmFolds.superclass.draw.call(this, _point);
 
 	// Boundary path
 	ctx.beginPath();
 
-	// Boundary path
-	ctx.beginPath();
+	// Invisible boundary
+	var r = 100;
+	ctx.arc(0,0, r, 0, Math.PI * 2, true);
+	ctx.scale(1.5,1);
 
-	// Radius of opacity
-	var ro = 200;
+	// Close path
+	ctx.closePath();
 
-	// Do a 360 arc
-	ctx.arc(0, 0, ro, 0, 2 * Math.PI, true);
-
-	// Opacity from apexY
-	var opacity = 0.3 + 0.6 * (ro + 2 * this.apexY) / ro;
-	ctx.fillStyle = "rgba(0, 255, 81," + opacity + ")";
-
-	// Set attributes
+	// Set line attributes
 	ctx.lineWidth = 0;
-	ctx.strokeStyle = "rgba(255, 0, 0, 0)";
+	ctx.fillStyle = "rgba(0, 0, 0, 0)";
+	ctx.strokeStyle = "rgba(0, 0, 0, 0)";
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
 
 	// Non boundary paths
-	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {}
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Colours
+		var fill = "rgba(255,255,0,1)";
+		//var fill = "rgba(210, 210, 210, 0.5)";
+
+		var dr = 5/ this.scaleX;
+
+		var p = new ED.Point(0, 0);
+		var n =15+ Math.abs(Math.floor(this.apexY / 2));
+		for (var i = 0; i < n/3;i++) {
+			p.setWithPolars(0.001*r*ED.randomArray1[i],2 * Math.PI * ED.randomArray[i +1]);
+			//p.setWithPolars(r * ED.randomArray[i], 2 * Math.PI * ED.randomArray[i +50]);
+			ctx.beginPath();
+			ctx.moveTo(p.x,p.y);
+			ctx.bezierCurveTo(p.x-5,p.y,p.x-5,p.y-10,p.x,p.y-10);
+			ctx.bezierCurveTo(p.x+5,p.y-10,p.x+5,p.y-20,p.x,p.y-20);
+			//this.drawSpot1(ctx, p.x, p.y, dr, fill);
+			
+			ctx.strokeStyle ="rgba(0,0,250,0.5)";
+			ctx.lineWidth = 3;
+			ctx.stroke();
+		}
+	}
 
 	// Coordinates of handles (in canvas plane)
-	point = new ED.Point(0, 0);
-	point.setWithPolars(ro, Math.PI / 4);
-	this.handleArray[2].location = this.transform.transformPoint(point);
-	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+	this.handleArray[2].location = this.transform.transformPoint(new ED.Point(r * 0.7, r * 0.7));
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX-50, this.apexY));
 
 	// Draw handles if selected
 	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
 
 	// Return value indicating successful hittest
 	return this.isClicked;
-}
-
-/**
- * Returns a string containing a text description of the doodle
- *
- * @returns {String} Description of doodle
- */
-ED.stromaledema.prototype.description = function() {
-	return "stromal edema";
 }
 
