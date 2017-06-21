@@ -19751,24 +19751,24 @@ ED.CiliaryInjection.prototype.draw = function(_point) {
 	var len=(ro-ri)/3;
 
 	// Calculate parameters for arcs
-	var theta = this.arc / 2;
-	var arcStart = -Math.PI / 2 + theta;
-	var arcEnd = -Math.PI / 2 - theta;
+	var teta = this.arc / 2;
+	var arcStart = -Math.PI / 2 + teta;
+	var arcEnd = -Math.PI / 2 - teta;
 
 	// Coordinates of 'corners' of doodle
-	var topRightX = r * Math.sin(theta);
-	var topRightY = -r * Math.cos(theta);
-	var topLeftX = -r * Math.sin(theta);
+	var topRightX = r * Math.sin(teta);
+	var topRightY = -r * Math.cos(teta);
+	var topLeftX = -r * Math.sin(teta);
 	var topLeftY = topRightY;
 
 	// Boundary path
 	ctx.beginPath();
 
 	// Arc across
-	ctx.arc(0, 0, ro, -Math.PI / 2 + theta, -Math.PI / 2 - theta, true);
+	ctx.arc(0, 0, ro, -Math.PI / 2 + teta, -Math.PI / 2 - teta, true);
 
 	// Arc back to mirror image point on the other side
-	ctx.arc(0, 0, ri, -Math.PI / 2 - theta, -Math.PI / 2 + theta, false);
+	ctx.arc(0, 0, ri, -Math.PI / 2 - teta, -Math.PI / 2 + teta, false);
 
 	// Close path
 	ctx.closePath();
@@ -19797,7 +19797,12 @@ ED.CiliaryInjection.prototype.draw = function(_point) {
 		// Start and end points of vessel
 		var sp = new ED.Point(0, 0);
 		var ep = new ED.Point(0, 0);
+		
+		var x1 = new ED.Point(0, 0);
+		var y1 = new ED.Point(0, 0);
 
+		var x2 = new ED.Point(0, 0);
+		var y2 = new ED.Point(0, 0);
 		ctx.beginPath();
 
 		// Radial lines
@@ -19809,16 +19814,20 @@ ED.CiliaryInjection.prototype.draw = function(_point) {
 			ctx.moveTo(ep.x, ep.y);
 			
 			sp.setWithPolars(ro-2*len, theta);
-			ctx.bezierCurveTo(ep.x+20,ep.y+20,sp.x-20,sp.y-20,sp.x,sp.y);
-			
+			x1.setWithPolars(ri+5, theta+0.025);
+			x2.setWithPolars(ri+15, theta+0.035);
+			ctx.bezierCurveTo(x1.x,x1.y,x2.x,x2.y,sp.x,sp.y);
+
 			sp.setWithPolars(ro-len, theta);
-			ep.setWithPolars(ri+len, theta);
-			ctx.bezierCurveTo(ep.x+20,ep.y+20,sp.x-20,sp.y-20,sp.x,sp.y);
-			
+			x1.setWithPolars(ri+25, theta-0.025);
+			x2.setWithPolars(ri+35, theta-0.035);
+			ctx.bezierCurveTo(x1.x,x1.y,x2.x,x2.y,sp.x,sp.y);
+
 			sp.setWithPolars(ro, theta);
-			ep.setWithPolars(ri+len, theta);
-			ctx.bezierCurveTo(ep.x+20,ep.y+20,sp.x-20,sp.y-20,sp.x,sp.y);
-			//ctx.lineTo(ep.x, ep.y);
+			x1.setWithPolars(ri+45, theta+0.025);
+			x2.setWithPolars(ri+55, theta+0.035);
+			ctx.bezierCurveTo(x1.x,x1.y,x2.x,x2.y,sp.x,sp.y);
+			
 		}
 
 		ctx.strokeStyle = "red";
