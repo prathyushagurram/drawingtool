@@ -16309,20 +16309,8 @@ ED.antseg2.prototype.draw = function(_point) {
 	ctx.lineWidth = 4;
 	ctx.strokeStyle = "gray";
 
-	// Iris colour
-			ctx.fillStyle = "rgba(228,237,254,0.5)";
-	
-	// Draw boundary path (also hit testing)
-	this.drawBoundary(_point);
-
-	
-	// Coordinates of handles (in canvas plane)
-	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
-
-	// Draw handles if selected
-	//if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
-
-	// Return value indicating successful hit test
+	ctx.fillStyle = "rgba(228,237,254,0.5)";
+	ctx.stroke();
 	return this.isClicked;
 }
 
@@ -16337,19 +16325,7 @@ ED.antseg2.prototype.description = function() {
 	
 	// Empty report so far
 	if (returnValue.length == 0 && this.drawing.doodleArray.length == 1) {
-		// Is lens present and normal?
-		/*
-		var doodle = this.drawing.lastDoodleOfClass('Lens');
-		if (doodle) {
-			var lensDescription = doodle.description();
-			if (lensDescription.length == 0) {
-				returnValue = "Anterior segment normal, ";
-			}
-		}
-		else {
-			returnValue = "Aphakic, ";
-		}
-		*/
+		
 		returnValue = "No abnormality";
 	}
 
@@ -16440,12 +16416,12 @@ ED.AntSeg1.prototype.draw = function(_point) {
 
 	// Iris colour
 			ctx.fillStyle = "rgba(228,237,254,0.5)";
-	
+	ctx.stroke();
 	// Draw boundary path (also hit testing)
-	this.drawBoundary(_point);
+	//this.drawBoundary(_point);
 
 	// Coordinates of handles (in canvas plane)
-	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+	//this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
 
 	// Draw handles if selected
 	//if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
@@ -21347,7 +21323,7 @@ ED.CornealGraft.prototype.description = function() {
  */
 
 /**
- * Lasik Flap
+ * corneal inlay
  *
  * @class CornealInlay
  * @property {String} className Name of doodle subclass
@@ -21550,9 +21526,9 @@ ED.MicrocysticEdema.prototype.draw = function(_point) {
 					for(var y=0;y<r;y+=g)
 					{	var l=this.xForY(r,y);
 						for(var x=0;x<l;x+=g){
-						ctx.moveTo(s*x+15,t*y);
-						ctx.arc(s*x,t*y,15,0,2*Math.PI/6,true);
-						ctx.bezierCurveTo(s*x,t*y,s*x+5,t*y-2,s*x+15,t*y);
+						ctx.moveTo(s*x+10,t*y);
+						ctx.arc(s*x,t*y,10,0,2*Math.PI,true);
+						//ctx.bezierCurveTo(s*x,t*y,s*x+5,t*y-2,s*x+15,t*y);
 						}
 					}
 				}
@@ -21948,7 +21924,7 @@ ED.CornealStriae.prototype.draw = function(_point) {
 	ctx.beginPath();
 
 	// CornealStriae
-	var r = 300;
+	var r = 100;
 	ctx.arc(0, 0, r, 0, Math.PI * 2, false);
 
 	// Close path
@@ -30297,13 +30273,13 @@ ED.LasikFlap = function(_drawing, _parameterJSON) {
 	this.className = "LasikFlap";
 
 	// Other parameters
-	this.gradeDLK = 'None';
+	//this.gradeDLK = 'None';
 
 	// Saved parameters
 	this.savedParameterArray = ['scaleX', 'scaleY', 'rotation', 'gradeDLK'];
 
 	// Parameters in doodle control bar (parameter name: parameter label)
-	this.controlParameterArray = {'gradeDLK':'DLK Grade'};
+	//this.controlParameterArray = {'gradeDLK':'DLK Grade'};
 
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
@@ -30456,7 +30432,9 @@ ED.LasikFlap.prototype.description = function() {
 }
 /**
 new annotation
-* class Name:post PRK haze
+* Post PRK Haze
+*@author :prathyusha
+*@class Name:post PRK haze
 
 */
 
@@ -40146,7 +40124,7 @@ ED.ScleralIncision.prototype.setHandles = function() {
  */
 ED.ScleralIncision.prototype.setPropertyDefaults = function() {
 	this.isScaleable = false;
-	this.isMoveable = false;
+	this.isMoveable = true;
 	this.isRotatable = true;
 	this.isArcSymmetrical = true;
 
@@ -40176,7 +40154,7 @@ ED.ScleralIncision.prototype.draw = function(_point) {
 	ED.ScleralIncision.superclass.draw.call(this, _point);
 
 	// Radii
-	var r = 560;
+	var r = 450;
 	var d = 40;
 	var ro = r + d;
 	var ri = r - d;
