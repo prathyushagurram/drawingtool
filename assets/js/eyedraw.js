@@ -21648,7 +21648,7 @@ ED.StromalEdema.prototype.draw = function(_point) {
 	//ctx.fillStyle = "rgba(100,100,100," + alpha.toFixed(2) + ")";
 	var grd=ctx.createRadialGradient(0,0,r,0,0,2*r);
 	grd.addColorStop(0,"rgba(0,0,200," + alpha.toFixed(2) + ")");
-	grd.addColorStop(1,"rgba(228,237,254,0.5)");
+	grd.addColorStop(1,"rgba(228,237,254,0)");
 	ctx.fillStyle=grd;
 	ctx.fillRect(-200,-200,400,400);
 	
@@ -21794,7 +21794,7 @@ ED.CornealScar.prototype.draw = function(_point) {
 	//ctx.fillStyle = "rgba(100,100,100," + alpha.toFixed(2) + ")";
 	var grd=ctx.createRadialGradient(0,0,r,0,0,2*r);
 	grd.addColorStop(0,"rgba(0,0,0," + alpha.toFixed(2) + ")");
-	grd.addColorStop(1,"rgba(228,237,254,1)");
+	grd.addColorStop(1,"rgba(228,237,254,0)");
 	ctx.fillStyle=grd;
 	ctx.fillRect(-200,-200,400,400);
 	
@@ -21802,7 +21802,7 @@ ED.CornealScar.prototype.draw = function(_point) {
 	ctx.closePath();
 
 	// Transparent stroke
-	ctx.strokeStyle = "rgba(228,237,254,1)";
+	ctx.strokeStyle = "rgba(228,237,254,0)";
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
@@ -27422,7 +27422,7 @@ ED.Infiltrate.prototype.draw = function(_point) {
 	//ctx.fillStyle = "rgba(100,100,100," + alpha.toFixed(2) + ")";
 	var grd=ctx.createRadialGradient(0,0,r,0,0,2*r);
 	grd.addColorStop(0,"rgba(250,220,0," + alpha.toFixed(2) + ")");
-	grd.addColorStop(1,"rgba(228,237,254,0.5)");
+	grd.addColorStop(1,"rgba(228,237,254,0)");
 	ctx.fillStyle=grd;
 	ctx.fillRect(-200,-200,400,400);
 	
@@ -27430,7 +27430,7 @@ ED.Infiltrate.prototype.draw = function(_point) {
 	ctx.closePath();
 
 	// Transparent stroke
-	ctx.strokeStyle = "rgba(100,100,100,0.0)";
+	ctx.strokeStyle = "rgba(100,100,100,0)";
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);

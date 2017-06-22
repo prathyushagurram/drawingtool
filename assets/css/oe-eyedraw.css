@@ -2079,7 +2079,7 @@ span.squiggle {
   border: 1px solid #53a0c7;
   border-width: 1px 1px 1px 0;
   padding: 5px;
-  position: absolute;
+ /* position: absolute;*/
   top: 0;
   z-index: 100;
   opacity: 1;
