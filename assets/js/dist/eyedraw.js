@@ -15913,6 +15913,45 @@ ED.AntSeg.prototype.draw = function(_point) {
 	// Return value indicating successful hit test
 	return this.isClicked;
 }
+ED.AntSeg.prototype.description = function() {
+	var returnValue = "";
+
+	// Pupil size and coloboma
+	if (this.pupilSize != 'Large') returnValue += this.pupilSize.toLowerCase() + " pupil, ";
+
+	// Coloboma
+	if (this.coloboma) returnValue += "coloboma at " + this.clockHour(6) + " o'clock, ";
+
+	// Ectopion
+	if (this.ectropion) returnValue += "ectropion uveae, ";
+
+	// PXE
+	if (this.pxe) returnValue += "pseudoexfoliation, ";
+	
+	// Empty report so far
+	if (returnValue.length == 0 && this.drawing.doodleArray.length == 1) {
+		// Is lens present and normal?
+		/*
+		var doodle = this.drawing.lastDoodleOfClass('Lens');
+		if (doodle) {
+			var lensDescription = doodle.description();
+			if (lensDescription.length == 0) {
+				returnValue = "Anterior segment normal, ";
+			}
+		}
+		else {
+			returnValue = "Aphakic, ";
+		}
+		*/
+		returnValue = "No abnormality";
+	}
+
+	// Remove final comma and space and capitalise first letter
+	returnValue = returnValue.replace(/, +$/, '');
+	returnValue = returnValue.charAt(0).toUpperCase() + returnValue.slice(1);
+
+	return returnValue;
+}
 ///for new template i.e, anterior3
 
 
@@ -16118,7 +16157,7 @@ ED.AntSeg3.prototype.draw = function(_point) {
 	ctx.strokeStyle = "gray";
 
 	// Iris colour
-			ctx.fillStyle = "rgba(228,237,254,0.5)";
+			ctx.fillStyle = "rgba(228,237,254,0)";
 	
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
