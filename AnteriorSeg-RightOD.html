@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="assets/css/oe-eyedraw.css" type="text/css" media="screen" />
-    <style type="text/css">
-    aside {
-    line-height:20px;
-    background-color:#eeeeee;
-    height:600px;
-    width:750px;
-    float:right;
-    padding:1px;          
-}
-    section {
-    position: relative;
-    bottom: 26px;
-    width:290px;
-    float:left;
-    padding:1px;        
-}
-    button {
-    font-size: 70%;
-}
-    #diag-title {
-    position: relative;
-    bottom: -535px;
-    left: -290px;
 
+    <script type="text/javascript" src="assets/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assets/css/oe-eyedraw.css" type="text/css" media="screen" />
+   
+<style>
+#annos{
+ background-image:url(assets/css/blue.jpg); 
+ background-size:4000px;
+ 
+ /*background-color:rgba(0,0,255,0.4);
+  */padding: 18px;
+    
 }
-    </style>
-    <script src="assets/js/dist/eyedraw.js" type="text/javascript"></script>
+   
+</style>
+      <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+     <script src="assets/js/dist/eyedraw.js" type="text/javascript"></script>
 
     <!--<script type="text/javascript">
     //Script to Draw a Circular Retina on Canvas 
@@ -73,7 +65,7 @@
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
-                            _drawing.addDoodle('AntSeg');
+                           // _drawing.addDoodle('AntSeg');
                             _drawing.addBindings({CorticalCataract:{}});
                             _drawing.addBindings({IrisHook:{}});
                             _drawing.addBindings({LimbalRelaxingIncision:{}});
@@ -144,6 +136,7 @@
                             _drawing.addBindings({Infiltrate:{}});
                              _drawing.addBindings({StromalEdema:{}});
                              _drawing.addBindings({MicrocysticEdema:{}});
+                             
                             _drawing.addDeleteValues({gradeSelect:'None'});
                             _drawing.deselectDoodles();
                             break;
@@ -199,221 +192,231 @@
 </head>
 
 <body onload="init();">
-<!--**Cortical Cataract Membrane button**
--->
+<div class="row" id ="annos">
+<div class="col-md-4">
+<div class="panel-heading" style="color:rgba(255,255,255,1);"><h1>Anterior Segment-Right(OD)</h1></div>
 
-<section>
-
-<h1><u>Anterior Segment Tool(OD)<u></h1>
 
 <canvas id="canvasEdit" class="ed-canvas-edit" width="520" height="520" style="poistion:relative; margin-left: auto; margin-right: auto;"></canvas>
 
-</section>
-
-<aside>
-<button class="imgbutton" onclick="print();"><img src="assets/img/old/Save.gif" />Save</button>
-
-<button class="imgbutton" onclick="drawingEdit.deleteSelectedDoodle();"><img src="assets/img/icons/32x32/manipulate/delete.png" />Delete</button>
-
-<button class="imgbutton" onclick="drawingEdit.deleteAllDoodles();"><img src="assets/img/icons/32x32/manipulate/delete.png" />DeleteAll</button>
-
-<button class="imgbutton" onclick="drawingEdit.moveToFront();" ><img src="assets/img/icons/32x32/manipulate/move-to-front.png" />MoveToFront</button>
-
-<button class="imgbutton" onclick="drawingEdit.moveToBack();" ><img src="assets/img/icons/32x32/manipulate/move-to-back.png" />MoveToBack</button>
-
-<!--
-
-<button class="imgbutton" onclick="drawingEdit.flipVer();" ><img src="assets/img/old/flipVer.gif" />FlipVertically</button>
-
-<button class="imgbutton" onclick="drawingEdit.flipHor();" ><img src="assets/img/old/flipHor.gif" />FlipHorizontally</button>
-
--->
-<button class="imgbutton" onclick="drawingEdit.lock();" ><img src="assets/img/icons/32x32/draw/old/lock.png" />Lock</button>
-
-<button class="imgbutton" onclick="drawingEdit.unlock();" ><img src="assets/img/icons/32x32/draw/old/unlock.png" />Unlock</button>
-
-<button class="imgbutton" onclick="undo();" ><img src="assets/img/icons/32x32/draw/old/Undo.png" />Undo</button>
-
-<button class="imgbutton" onclick="redo();" ><img src="assets/img/icons/32x32/draw/old/Redo.png" />Redo</button>
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.clear(false);" >Clear</button>
--->
-
-<strong><h3>Anterior Segment Annotations</h3></strong>
-<div id="add">
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CornealSuture'); return false;" ><img src="assets/img/old/CornealSuture.gif" />CornealSuture</button>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('LooseSuture'); return false;" ><img src="assets/img/old/Lens.gif" style="width:20px;height:32px;" />LooseSuture</button>
-
-<!--<button class="imgbutton" onclick="drawingEdit.addDoodle('CornealAbrasion'); return false;" ><img src="assets/img/old/CornealAbrasion.gif" />CornealAbrasion</button>-->
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('StromalEdema');drawingEdit.addDoodle('DmFolds'); return false;" ><img src="assets/img/old/CornealOedema.gif" />Stromal Edema</button>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('MicrocysticEdema'); return false;" ><img src="assets/img/patterns/OedemaPatternBullous.gif" />Microcystic edema</button>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('bullae'); return false;" ><img src="assets/img/old/IRMA.gif" />Bullae</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CornealStriae'); return false;" ><img src="assets/img/old/CornealStriae.gif" />CornealStriae</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CornealScar'); return false;" ><img src="assets/img/old/CornealScar.gif" />CornealScar</button>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Infiltrate'); return false;" ><img src="assets/img/old/NuclearCataract.gif" style="width:50px;height:32px;"/>Infiltrate</button>
-
-<!--<button class="imgbutton" onclick="drawingEdit.addDoodle('CornealErosion'); return false;" ><img src="assets/img/old/CornealErosion.gif" />CornealErosion</button>-->
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('KeraticPrecipitates'); return false;" ><img src="assets/img/old/KeraticPrecipitates.gif" />KeraticPrecipitates</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('KrukenbergSpindle'); return false;" ><img src="assets/img/old/KrukenbergSpindle.gif" />KrukenbergSpindle</button>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CornealGuttate'); return false;" ><img src="assets/img/old/Fuchs.gif" />Corneal guttate</button>
-
-<!--<button class="imgbutton" onclick="drawingEdit.addDoodle('Fuchs'); return false;" ><img src="assets/img/old/Fuchs.gif" />Fuchs</button>-->
-
-<!--<button class="imgbutton" onclick="drawingEdit.addDoodle('CornealInlay'); return false;" ><img src="assets/img/old/CornealInlay.gif" />CornealInlay</button>-->
-
-<br>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CornealGraft'); return false;" ><img src="assets/img/old/CornealGraft.gif" />CornealGraft</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('RK'); return false;" ><img src="assets/img/old/RK.gif" />RK</button>
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('IrisHook'); return false;" ><img src="assets/img/old/IrisHook.gif" />IrisHook</button>
--->
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('LimbalRelaxingIncision'); return false;" ><img src="assets/img/old/LimbalRelaxingIncision.gif" />LimbalRelaxingIncision</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PhakoIncision'); return false;" ><img src="assets/img/old/PhakoIncision.gif" />PhakoIncision</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('LasikFlap'); return false;" ><img src="assets/img/old/LasikFlap.gif" />LasikFlap</button>
-<br>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PostPrkHaze'); return false;" ><img src="assets/img/icons/32x32/draw/new/MacularThickening.png" />Post PRK Haze</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CiliaryInjection'); return false;" ><img src="assets/img/old/CiliaryInjection.gif" />CiliaryInjection</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Hyphaema'); return false;" ><img src="assets/img/old/Hyphaema.gif" />Hyphaema</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Hypopyon'); return false;" ><img src="assets/img/old/Hypopyon.gif" />Hypopyon</button>
-<br>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('TransilluminationDefect'); return false;" ><img src="assets/img/old/TransilluminationDefect.gif" />TransilluminationDefect</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('IrisNaevus'); return false;" ><img src="assets/img/old/IrisNaevus.gif" />IrisNaevus</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Rubeosis'); return false;" ><img src="assets/img/old/Rubeosis.gif" />Rubeosis</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('BusaccaNodule'); return false;" ><img src="assets/img/old/BusaccaNodule.gif" />BusaccaNodule</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('KoeppeNodule'); return false;" ><img src="assets/img/old/KoeppeNodule.gif" />KoeppeNodule</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PI'); return false;" ><img src="assets/img/old/PI.gif" />PeripheralIridectomy</button>
-
-<!--<button class="imgbutton" onclick="drawingEdit.addDoodle('CutterPI'); return false;" ><img src="assets/img/old/CutterPI.gif" />CutterPI</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('AntSynech'); return false;" ><img src="assets/img/old/AntSynech.gif" />AntSynech</button>
--->
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PosteriorSynechia'); return false;" ><img src="assets/img/old/PosteriorSynechia.gif" />PosteriorSynechia</button>
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('AngleNV'); return false;" ><img src="assets/img/old/AngleNV.gif" />AngleNV</button>
--->
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('SectorIridectomy'); return false;" ><img src="assets/img/old/SectorIridectomy.gif" />SectorIridectomy</button>
-<!--
-<br>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Lens'); return false;" ><img src="assets/img/old/Lens.gif" />Lens</button>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('BandageContactLens'); return false;" ><img src="assets/img/old/Lens.gif" />Bandage contact Lens</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('NuclearCataract'); return false;" ><img src="assets/img/old/NuclearCataract.gif" />NuclearCataract</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="assets/img/old/CorticalCataract.gif" />CorticalCataract</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PostSubcapCataract'); return false;" ><img src="assets/img/old/PostSubcapCataract.gif" />PostSubcapCataract</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PosteriorCapsule'); return false;" ><img src="assets/img/old/PosteriorCapsule.gif" />PosteriorCapsule</button>
--->
-<br>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CapsularTensionRing'); return false;" ><img src="assets/img/old/CapsularTensionRing.gif" />CapsularTensionRing</button>
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Supramid'); return false;" ><img src="assets/img/old/Supramid.gif" />Supramid</button>
--->
-
-<br>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ToricPCIOL'); return false;" ><img src="assets/img/old/ToricPCIOL.gif" />ToricPCIOL</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ACIOL'); return false;" ><img src="assets/img/old/ACIOL.gif" />ACIOL</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PCIOL'); return false;" ><img src="assets/img/old/PCIOL.gif" />PCIOL</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('IOL'); return false;" ><img src="assets/img/old/IOL.gif" />IOL</button>
-
-<br>
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ACMaintainer'); return false;" ><img src="assets/img/old/ACMaintainer.gif" />ACMaintainer</button>
--->
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('TrabyConjIncision'); return false;" ><img src="assets/img/old/TrabyConjIncision.gif" />TrabyConjIncision</button>
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Sclerostomy'); return false;" ><img src="assets/img/old/Sclerostomy.gif" />Sclerostomy</button>
--->
- 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('BiopsySite'); return false;" ><img src="assets/img/old/BiopsySite.gif" />BiopsySite</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('MattressSuture'); return false;" ><img src="assets/img/old/MattressSuture.gif" />MattressSuture</button>
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ConjunctivalFlap'); return false;" ><img src="assets/img/old/ConjunctivalFlap.gif" />ConjunctivalFlap</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('SidePort'); return false;" ><img src="assets/img/old/SidePort.gif" />SidePort</button>
--->
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Bleb'); return false;" ><img src="assets/img/old/Bleb.gif" />Bleb</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ConjunctivalSuture'); return false;" ><img src="assets/img/old/ConjunctivalSuture.gif" />ConjunctivalSuture</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ScleralIncision'); return false;" ><img src="assets/img/old/ScleralIncision.gif" />ScleralIncision</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Vicryl'); return false;" ><img src="assets/img/old/Vicryl.gif" />Vicryl</button>
-
-<br>
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('AngleRecession'); return false;" ><img src="assets/img/old/AngleRecession.gif" />AngleRecession</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CircumferentialBuckle'); return false;" ><img src="assets/img/old/CircumferentialBuckle.gif" />CircumferentialBuckle</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('BuckleSuture'); return false;" ><img src="assets/img/old/BuckleSuture.gif" />BuckleSuture</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('DrainageSite'); return false;" ><img src="assets/img/old/DrainageSite.gif" />DrainageSite</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ChandelierSingle'); return false;" ><img src="assets/img/old/ChandelierSingle.gif" />ChandelierSingle</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ChandelierDouble'); return false;" ><img src="assets/img/old/ChandelierDouble.gif" />ChandelierDouble</button>
--->
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('DiscPallor'); return false;" ><img src="assets/img/old/DiscPallor.gif" />DiscPallor</button>
--->
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('InjectionSite'); return false;" ><img src="assets/img/old/InjectionSite.gif" />InjectionSite</button>
--->
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PRPPostPole'); return false;" ><img src="assets/img/old/PRPPostPole.gif" />PRPPostPole</button>
--->
 </div>
-</aside>
-<!---->
-<br/>
-<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:absolute; left: 700px; top:505px; -webkit-user-select: text; -moz-user-select: text; user-select: text;z-index: 100;opacity: 1;">Controls</div>
 
-<p style="position:absolute; left: 700px; top:48px;">Selected Annotation : </p>
+<div class="col-md-3">
 
-<p style="position:absolute; left: 850px; top:48px;" id="className">None Selected</p>
+	<div class="panel panel-default">
+		<div class="panel-heading">Selected Annotation</div>
+		<div class="panel-body">
+		<p id="className">None Selected</p>
+		</div>
+	</div>
+	<h4 style="color:white">Template:</h4>
+	<button class="btn btn-default" onclick="drawingEdit.addDoodle('AntSeg');return false;">None</button>
+	
+	<button class="btn btn-default" onclick="drawingEdit.addDoodle('AntSeg1');drawingEdit.addDoodle('CornealGraft'); return false;">Corneal Graft</button>
 
-<h2 id="diag-title">Diagnosis</h2>
+	<button class="btn btn-default" onclick="drawingEdit.addDoodle('antseg2'); return false;">Quadrants</button>
 
-<textarea rows="4" cols="164" id="saveInput"></textarea>
+	<button class="btn btn-default" onclick="drawingEdit.addDoodle('AntSeg1'); return false;">simple</button>
+	<div>
+	<button class="btn btn-default" onclick="window.location.reload(); return false;">change template</button>
+	
+	</div>
 
+	<div id="canvasEdit_controls" class="ed-doodle-popup">Controls</div>
+
+</div>
+
+
+<div class="col-md-5">
+<button class="btn btn-default" onclick="print();"><img src="assets/img/old/Save.gif" />Save</button>
+
+<button class="btn btn-default" onclick="drawingEdit.deleteSelectedDoodle();"><img src="assets/img/icons/32x32/manipulate/delete.png" />Delete</button>
+
+<button class="btn btn-default" onclick="drawingEdit.deleteAllDoodles();"><img src="assets/img/icons/32x32/manipulate/delete.png" />DeleteAll</button>
+
+<button class="btn btn-default" onclick="drawingEdit.moveToFront();" ><img src="assets/img/icons/32x32/manipulate/move-to-front.png" />MoveToFront</button>
+
+<button class="btn btn-default" onclick="drawingEdit.moveToBack();" ><img src="assets/img/icons/32x32/manipulate/move-to-back.png" />MoveToBack</button>
+<!--
+<button class="btn btn-default" onclick="drawingEdit.flipVer();" ><img src="assets/img/old/flipVer.gif" />FlipVertically</button>
+
+<button class="btn btn-default" onclick="drawingEdit.flipHor();" ><img src="assets/img/old/flipHor.gif" />FlipHorizontally</button>
+-->
+<br>
+<button class="btn btn-default" onclick="drawingEdit.lock();" ><img src="assets/img/icons/32x32/draw/old/lock.png" />Lock</button>
+
+<button class="btn btn-default" onclick="drawingEdit.unlock();" ><img src="assets/img/icons/32x32/draw/old/unlock.png" />Unlock</button>
+
+<button class="btn btn-default" onclick="undo();" ><img src="assets/img/icons/32x32/draw/old/Undo.png" />Undo</button>
+
+<button class="btn btn-default" onclick="redo();" ><img src="assets/img/icons/32x32/draw/old/Redo.png" />Redo</button>
+<!--
+<button class="btn btn-default" onclick="drawingEdit.clear(false);" >Clear</button>
+-->
+<div class="panel panel-primary" style="background-color:rgba(0,0,0,0.25);">
+	<div class="panel-heading">Anterior Segment Annotations</div>
+<div class="panel-body"> 
+<div id="add">
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealSuture'); return false;" ><img src="assets/img/old/CornealSuture.gif" />CornealSuture</button>
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('LooseSuture'); return false;" ><img src="assets/img/old/Lens.gif" style="width:20px;height:32px;" />LooseSuture</button>
+
+<button class="btn btn-default"onclick="drawingEdit.addDoodle('StromalEdema');drawingEdit.addDoodle('DmFolds');return false;"><img src="assets/img/old/CornealOedema.gif"/>Stromal Edema</button>
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('MicrocysticEdema'); return false;" ><img src="assets/img/patterns/OedemaPatternBullous.gif" />Microcystic edema</button>
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('bullae'); return false;" ><img src="assets/img/old/IRMA.gif" />Bullae</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealStriae'); return false;" ><img src="assets/img/old/CornealStriae.gif" />CornealStriae</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealScar'); return false;" ><img src="assets/img/old/CornealScar.gif" />CornealScar</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Infiltrate'); return false;" ><img src="assets/img/old/NuclearCataract.gif" style="width:50px;height:32px;"/>Infiltrate</button>
+<br>
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('KeraticPrecipitates'); return false;" ><img src="assets/img/old/KeraticPrecipitates.gif" />KeraticPrecipitates</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('KrukenbergSpindle'); return false;" ><img src="assets/img/old/KrukenbergSpindle.gif" />KrukenbergSpindle</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealGuttate'); return false;" ><img src="assets/img/old/Fuchs.gif" />Corneal guttate</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RK'); return false;" ><img src="assets/img/old/RK.gif" />RK</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealGraft'); return false;" ><img src="assets/img/old/CornealGraft.gif" />CornealGraft</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('LimbalRelaxingIncision'); return false;" ><img src="assets/img/old/LimbalRelaxingIncision.gif" />LimbalRelaxingIncision</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PhakoIncision'); return false;" ><img src="assets/img/old/PhakoIncision.gif" />PhakoIncision</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('LasikFlap'); return false;" ><img src="assets/img/old/LasikFlap.gif" />LasikFlap</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PostPrkHaze'); return false;" ><img src="assets/img/icons/32x32/draw/new/MacularThickening.png" />Post PRK Haze</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CiliaryInjection'); return false;" ><img src="assets/img/old/CiliaryInjection.gif" />CiliaryInjection</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Hyphaema'); return false;" ><img src="assets/img/old/Hyphaema.gif" />Hyphaema</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Hypopyon'); return false;" ><img src="assets/img/old/Hypopyon.gif" />Hypopyon</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CapsularTensionRing'); return false;" ><img src="assets/img/old/CapsularTensionRing.gif" />CapsularTensionRing</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ToricPCIOL'); return false;" ><img src="assets/img/old/ToricPCIOL.gif" />ToricPCIOL</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ACIOL'); return false;" ><img src="assets/img/old/ACIOL.gif" />ACIOL</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PCIOL'); return false;" ><img src="assets/img/old/PCIOL.gif" />PCIOL</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('IOL'); return false;" ><img src="assets/img/old/IOL.gif" />IOL</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('TrabyConjIncision'); return false;" ><img src="assets/img/old/TrabyConjIncision.gif" />TrabyConjIncision</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('BiopsySite'); return false;" ><img src="assets/img/old/BiopsySite.gif" />BiopsySite</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('MattressSuture'); return false;" ><img src="assets/img/old/MattressSuture.gif" />MattressSuture</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Bleb'); return false;" ><img src="assets/img/old/Bleb.gif" />Bleb</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ConjunctivalSuture'); return false;" ><img src="assets/img/old/ConjunctivalSuture.gif" />ConjunctivalSuture</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ScleralIncision'); return false;" ><img src="assets/img/old/ScleralIncision.gif" />ScleralIncision</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Vicryl'); return false;" ><img src="assets/img/old/Vicryl.gif" />Vicryl</button>
+
+	<div class="panel-heading"><button data-toggle="collapse" data-target="#rest">IRIS</button></div>
+	<div id="rest" class="collapse">
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('TransilluminationDefect'); return false;" ><img src="assets/img/old/TransilluminationDefect.gif" />TransilluminationDefect</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('IrisNaevus'); return false;" ><img src="assets/img/old/IrisNaevus.gif" />IrisNaevus</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Rubeosis'); return false;" ><img src="assets/img/old/Rubeosis.gif" />Rubeosis</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('BusaccaNodule'); return false;" ><img src="assets/img/old/BusaccaNodule.gif" />BusaccaNodule</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('KoeppeNodule'); return false;" ><img src="assets/img/old/KoeppeNodule.gif" />KoeppeNodule</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PI'); return false;" ><img src="assets/img/old/PI.gif" />PeripheralIridectomy</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PosteriorSynechia'); return false;" ><img src="assets/img/old/PosteriorSynechia.gif" />PosteriorSynechia</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SectorIridectomy'); return false;" ><img src="assets/img/old/SectorIridectomy.gif" />SectorIridectomy</button>
+
+</div>
+	
+	<div class="panel-heading"><button data-toggle="collapse" data-target="#last">LENS</button></div>
+	<div id="last" class="collapse">
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('BandageContactLens'); return false;" ><img src="assets/img/old/Lens.gif" />Bandage contact Lens</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('NuclearCataract'); return false;" ><img src="assets/img/old/NuclearCataract.gif" />NuclearCataract</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="assets/img/old/CorticalCataract.gif" />CorticalCataract</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PostSubcapCataract'); return false;" ><img src="assets/img/old/PostSubcapCataract.gif" />PostSubcapCataract</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PosteriorCapsule'); return false;" ><img src="assets/img/old/PosteriorCapsule.gif" />PosteriorCapsule</button>
+</div>
+
+<!--
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Supramid'); return false;" ><img src="assets/img/old/Supramid.gif" />Supramid</button>
+-->
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('ACMaintainer'); return false;" ><img src="assets/img/old/ACMaintainer.gif" />ACMaintainer</button>-->
+<!--
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('AngleRecession'); return false;" ><img src="assets/img/old/AngleRecession.gif" />AngleRecession</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CircumferentialBuckle'); return false;" ><img src="assets/img/old/CircumferentialBuckle.gif" />CircumferentialBuckle</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('BuckleSuture'); return false;" ><img src="assets/img/old/BuckleSuture.gif" />BuckleSuture</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('DrainageSite'); return false;" ><img src="assets/img/old/DrainageSite.gif" />DrainageSite</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ChandelierSingle'); return false;" ><img src="assets/img/old/ChandelierSingle.gif" />ChandelierSingle</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ChandelierDouble'); return false;" ><img src="assets/img/old/ChandelierDouble.gif" />ChandelierDouble</button>
+-->
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('DiscPallor'); return false;" ><img src="assets/img/old/DiscPallor.gif" />DiscPallor</button>-->
+
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('InjectionSite'); return false;" ><img src="assets/img/old/InjectionSite.gif" />InjectionSite</button>-->
+<!--
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PRPPostPole'); return false;" ><img src="assets/img/old/PRPPostPole.gif" />PRPPostPole</button>
+-->
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealAbrasion'); return false;" ><img src="assets/img/old/CornealAbrasion.gif" />CornealAbrasion</button>-->
+
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealErosion'); return false;" ><img src="assets/img/old/CornealErosion.gif" />CornealErosion</button>-->
+
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('Fuchs'); return false;" ><img src="assets/img/old/Fuchs.gif" />Fuchs</button>-->
+
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealInlay'); return false;" ><img src="assets/img/old/CornealInlay.gif" />CornealInlay</button>-->
+
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('IrisHook'); return false;" ><img src="assets/img/old/IrisHook.gif" />IrisHook</button>-->
+
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('Sclerostomy'); return false;" ><img src="assets/img/old/Sclerostomy.gif" />Sclerostomy</button>-->
+<!--
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ConjunctivalFlap'); return false;" ><img src="assets/img/old/ConjunctivalFlap.gif" />ConjunctivalFlap</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SidePort'); return false;" ><img src="assets/img/old/SidePort.gif" />SidePort</button>
+-->
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('CutterPI'); return false;" ><img src="assets/img/old/CutterPI.gif" />CutterPI</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('AntSynech'); return false;" ><img src="assets/img/old/AntSynech.gif" />AntSynech</button>
+-->
+<!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('AngleNV'); return false;" ><img src="assets/img/old/AngleNV.gif" />AngleNV</button>-->
+<!--
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Lens'); return false;" ><img src="assets/img/old/Lens.gif" />Lens</button>-->
+</div>
+</div>
+</div>
+</div>
+<div class="row" style="padding:20px;margin:150px;">
+    <div class="col-sm-12">
+<div class="panel panel-primary" style="background-color:rgba(0,0,0,0.25);">
+<div class="panel-heading" style="font-size:20px;">Diagnosis:</div>
+<div class="panel-body">
+<textarea rows="4" cols="120" id="saveInput" style="font-size:18px;background-color:rgba(200,200,200,0.8);"></textarea>
+</div>
+</div>
+</div>
+
+</div>
 </body>
+
 <script type="text/javascript">
     var undoStack = [];
     var redoStack = [];

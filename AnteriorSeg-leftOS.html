@@ -8,9 +8,12 @@
 
 <style>
 #annos{
- background:url(assets/css/blue.jpg) no-repeat;
- background-size:auto;
-    padding: 18px;
+ background-image:url(assets/css/blue.jpg);
+ 
+ background-size:4000px;
+  
+  /*background-color:rgba(0,0,255,0.4);
+  */padding: 18px;
     
 }
    
@@ -81,7 +84,6 @@
                             _drawing.addBindings({ToricPCIOL:{}});
                          //   _drawing.addBindings({CornealAbrasion:{}});
                             
-                            _drawing.addBindings({bullae:{}});
                             _drawing.addBindings({Rubeosis:{}});
                             _drawing.addBindings({CutterPI:{}});
                             _drawing.addBindings({PosteriorCapsule:{}});
@@ -125,7 +127,8 @@
                             _drawing.addBindings({Label:{}});
              		    
              		    _drawing.ddBindings({CornealGuttate:{}});
-             		   _drawing.addBindings({LooseSuture:{}});
+             		    _drawing.addBindings({bullae:{}});
+               		   _drawing.addBindings({LooseSuture:{}});
              		   _drawing.addBindings({BandageContactLens:{}});
              		   _drawing.addBindings({PostPrkHaze:{}});
              		   _drawing.addBindings({Infiltrate:{}});
@@ -188,9 +191,9 @@
 <body onload="init();">
 <div class="row" id ="annos">
 <div class="col-md-4">
-<div class="panel-heading" style="font-size:30px;">Anterior Segment left(OS)</div>
+<div class="panel-heading" style="color:white;"><h1>Anterior Segment-Left(OS)</h1></div>
 <!--<h2><u>Anterior segment-left (OS)</u></h2>-->
-<canvas id="canvasEdit" class="ed-canvas-edit" width="520" height="520" style="poistion:relative; margin-left: auto; margin-right: auto;"></canvas>
+<canvas id="canvasEdit" class="ed-canvas-edit" width="520" height="520"></canvas>
 
 </div>
 
@@ -230,7 +233,7 @@
 <button class="btn btn-default" onclick="drawingEdit.moveToFront();" ><img src="assets/img/icons/32x32/manipulate/move-to-front.png" />MoveToFront</button>
 
 <button class="btn btn-default" onclick="drawingEdit.moveToBack();" ><img src="assets/img/icons/32x32/manipulate/move-to-back.png" />MoveToBack</button>
-
+<br>
 <button class="btn btn-default" onclick="drawingEdit.lock();" ><img src="assets/img/icons/32x32/draw/old/lock.png" />Lock</button>
 
 <button class="btn btn-default" onclick="drawingEdit.unlock();" ><img src="assets/img/icons/32x32/draw/old/unlock.png" />Unlock</button>
@@ -274,7 +277,7 @@
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('PhakoIncision'); return false;" ><img src="assets/img/old/PhakoIncision.gif" />PhakoIncision</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('LasikFlap'); return false;" ><img src="assets/img/old/LasikFlap.gif" />LasikFlap</button>
-<br>
+
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('PostPrkHaze'); return false;" ><img src="assets/img/icons/32x32/draw/new/MacularThickening.png" />Post PRK Haze</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('CiliaryInjection'); return false;" ><img src="assets/img/old/CiliaryInjection.gif" />CiliaryInjection</button>
@@ -283,7 +286,6 @@
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('Hypopyon'); return false;" ><img src="assets/img/old/Hypopyon.gif" />Hypopyon</button>
 
-<br>
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('CapsularTensionRing'); return false;" ><img src="assets/img/old/CapsularTensionRing.gif" />CapsularTensionRing</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('ToricPCIOL'); return false;" ><img src="assets/img/old/ToricPCIOL.gif" />ToricPCIOL</button>
@@ -293,8 +295,6 @@
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('PCIOL'); return false;" ><img src="assets/img/old/PCIOL.gif" />PCIOL</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('IOL'); return false;" ><img src="assets/img/old/IOL.gif" />IOL</button>
-
-<br>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('TrabyConjIncision'); return false;" ><img src="assets/img/old/TrabyConjIncision.gif" />TrabyConjIncision</button>
 
@@ -346,7 +346,6 @@
 
 	</div>
 
-
 <!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealAbrasion'); return false;" ><img src="assets/img/old/CornealAbrasion.gif" />CornealAbrasion</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealErosion'); return false;" ><img src="assets/img/old/CornealErosion.gif" />CornealErosion</button>
@@ -358,7 +357,6 @@
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('AntSynech'); return false;" ><img src="assets/img/old/AntSynech.gif" />AntSynech</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('Lens'); return false;" ><img src="assets/img/old/Lens.gif" />Lens</button>
-
 -->
 </div>
 </div>
@@ -366,10 +364,10 @@
 </div>
 <div class="row" style="padding:20px;margin:150px;">
     <div class="col-sm-12">
-<div class="panel panel-default">
-<div class="panel-heading" style="font-size:20px;color:blue;">Diagnosis:</div>
+<div class="panel panel-primary" style="background-color:rgba(0,0,0,0.25);">
+<div class="panel-heading" style="font-size:20px;">Diagnosis:</div>
 <div class="panel-body">
-<textarea rows="4" cols="160" id="saveInput"></textarea>
+<textarea rows="4" cols="128" id="saveInput" style="font-size:18px;background-color:rgba(200,200,200,0.8);"></textarea>
 </div>
 </div>
 </div>
