@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
     <script type="text/javascript" src="assets/js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="assets/css/oe-eyedraw.css" type="text/css" media="screen" />
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 #annos{
  background-image:url(assets/css/blue.jpg);
@@ -67,62 +66,62 @@
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
-                          //  _drawing.addBindings({AntSeg:{}});
+                          //_drawing.addBindings({AntSeg:{}});
                             _drawing.addBindings({CorticalCataract:{}});
-                            _drawing.addBindings({IrisHook:{}});
+                          //_drawing.addBindings({IrisHook:{}});
                             _drawing.addBindings({LimbalRelaxingIncision:{}});
                             _drawing.addBindings({ConjunctivalSuture:{}});
                             _drawing.addBindings({CornealSuture:{}});
                             _drawing.addBindings({TransilluminationDefect:{}});
-                            _drawing.addBindings({CornealGraft:{}});
+                          //_drawing.addBindings({CornealGraft:{}});
                             _drawing.addBindings({KeraticPrecipitates:{}});
                             _drawing.addBindings({ScleralIncision:{}});
                             _drawing.addBindings({IrisNaevus:{}});
                             _drawing.addBindings({Hyphaema:{}});//one way binding check code
                             _drawing.addBindings({Vicryl:{}});
-                            _drawing.addBindings({Lens:{}});
+                          //_drawing.addBindings({Lens:{}});
                             _drawing.addBindings({ToricPCIOL:{}});
-                         //   _drawing.addBindings({CornealAbrasion:{}});
+                          //_drawing.addBindings({CornealAbrasion:{}});
                             
                             _drawing.addBindings({Rubeosis:{}});
-                            _drawing.addBindings({CutterPI:{}});
-                            _drawing.addBindings({PosteriorCapsule:{}});
+                          //_drawing.addBindings({CutterPI:{}});
+                          //_drawing.addBindings({PosteriorCapsule:{}});
                             _drawing.addBindings({BusaccaNodule:{}});
                             _drawing.addBindings({KrukenbergSpindle:{}});
                             _drawing.addBindings({KoeppeNodule:{}});
                             _drawing.addBindings({CiliaryInjection:{}});
                             _drawing.addBindings({CornealStriae:{}});
                             _drawing.addBindings({CapsularTensionRing:{}});
-                            _drawing.addBindings({Supramid:{}});
+                          //_drawing.addBindings({Supramid:{}});
                             _drawing.addBindings({Hypopyon:{}});
                             _drawing.addBindings({PhakoIncision:{}});
                             _drawing.addBindings({PosteriorEmbryotoxon:{}});
-                            _drawing.addBindings({CornealErosion:{}});
-                            _drawing.addBindings({PostSubcapCataract:{}});
+                          //_drawing.addBindings({CornealErosion:{}});
+                          //_drawing.addBindings({PostSubcapCataract:{}});
                             _drawing.addBindings({CornealScar:{}});
                             _drawing.addBindings({ACIOL:{}});
                             _drawing.addBindings({PCIOL:{}});
                             _drawing.addBindings({PI:{}});
                             _drawing.addBindings({LasikFlap:{}});
                             _drawing.addBindings({NuclearCataract:{}});
-                            _drawing.addBindings({ACMaintainer:{}});
+                       	  //_drawing.addBindings({ACMaintainer:{}});
                             _drawing.addBindings({PosteriorSynechia:{}});
-                            _drawing.addBindings({AngleNV:{}});
+                          //_drawing.addBindings({AngleNV:{}});
                             _drawing.addBindings({RK:{}});
                             _drawing.addBindings({SectorIridectomy:{}});
-                            _drawing.addBindings({Fuchs:{}});
-                            _drawing.addBindings({AntSynech:{}});
+                          //_drawing.addBindings({Fuchs:{}});
+                          //_drawing.addBindings({AntSynech:{}});
                             _drawing.addBindings({TrabyConjIncision:{}});
                             _drawing.addBindings({TrabySuture:{}});
-                            _drawing.addBindings({CornealInlay:{}});
+                          //_drawing.addBindings({CornealInlay:{}});
                             _drawing.addBindings({IOL:{}});
-                            _drawing.addBindings({Sclerostomy:{}});
+                          //_drawing.addBindings({Sclerostomy:{}});
                             _drawing.addBindings({BiopsySite:{}});
                             _drawing.addBindings({MattressSuture:{}});
-                            _drawing.addBindings({ConjunctivalFlap:{}});
-                            _drawing.addBindings({SidePort:{}});
+                          //_drawing.addBindings({ConjunctivalFlap:{}});
+                          //_drawing.addBindings({SidePort:{}});
                             _drawing.addBindings({DrugStent:{}});
-                            _drawing.addBindings({AngleRecession:{}});
+                          //_drawing.addBindings({AngleRecession:{}});
                             _drawing.addBindings({Bleb:{}});
                             _drawing.addBindings({Label:{}});
              		    
@@ -191,7 +190,7 @@
 <body onload="init();">
 <div class="row" id ="annos">
 <div class="col-md-4">
-<div class="panel-heading" style="color:white;"><h1>Anterior Segment-Left(OS)</h1></div>
+<div class="panel-heading" style="color:white;"><h1><span style="background:rgba(0,0,0,0.35);padding:10px"><i>Anterior Segment-Left(OS)</i></span></h1></div>
 <!--<h2><u>Anterior segment-left (OS)</u></h2>-->
 <canvas id="canvasEdit" class="ed-canvas-edit" width="520" height="520"></canvas>
 
@@ -205,7 +204,7 @@
 		<p id="className">None Selected</p>
 		</div>
 	</div>
-	<p>Template:</p>
+	<h4 style="color:black">Template:</h4>
 	<button class="btn btn-default" onclick="drawingEdit.addDoodle('AntSeg');return false;">None</button>
 	
 	<button class="btn btn-default" onclick="drawingEdit.addDoodle('AntSeg1');drawingEdit.addDoodle('CornealGraft'); return false;">Corneal Graft</button>
@@ -253,8 +252,8 @@
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('LooseSuture'); return false;" ><img src="assets/img/old/Lens.gif " style="width:20px;height:32px" />LooseSuture</button>
 
 <button class="btn btn-default"onclick="drawingEdit.addDoodle('StromalEdema');drawingEdit.addDoodle('DmFolds');return false;"><img src="assets/img/old/CornealOedema.gif"/>Stromal Edema</button>
-<button class="btn btn-default" onclick="drawingEdit.addDoodle('MicrocysticEdema'); return false;" ><img src="assets/img/patterns/OedemaPatternBullous.gif" />Microcystic edema</button>
-<button class="btn btn-default" onclick="drawingEdit.addDoodle('bullae'); return false;" ><img src="assets/img/old/IRMA.gif" />Bullae</button>
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('MicrocysticEdema'); return false;" ><img src="assets/img/old/microcysticedema.gif" />Microcystic edema</button>
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('bullae'); return false;" ><img src="assets/img/old/bullae.gif" />Bullae</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealStriae'); return false;" ><img src="assets/img/old/CornealStriae.gif" />CornealStriae</button>
 
@@ -269,8 +268,6 @@
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealGuttate'); return false;" ><img src="assets/img/old/Fuchs.gif" />Corneal guttate</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('RK'); return false;" ><img src="assets/img/old/RK.gif" />RK</button>
-
-<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealGraft'); return false;" ><img src="assets/img/old/CornealGraft.gif" />CornealGraft</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('LimbalRelaxingIncision'); return false;" ><img src="assets/img/old/LimbalRelaxingIncision.gif" />LimbalRelaxingIncision</button>
 
@@ -305,7 +302,7 @@
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('Bleb'); return false;" ><img src="assets/img/old/Bleb.gif" />Bleb</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('ConjunctivalSuture'); return false;" ><img src="assets/img/old/ConjunctivalSuture.gif" />ConjunctivalSuture</button>
-
+<br>
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('ScleralIncision'); return false;" ><img src="assets/img/old/ScleralIncision.gif" />ScleralIncision</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('Vicryl'); return false;" ><img src="assets/img/old/Vicryl.gif" />Vicryl</button>
@@ -340,10 +337,6 @@
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="assets/img/old/CorticalCataract.gif" />CorticalCataract</button>
 
-<button class="btn btn-default" onclick="drawingEdit.addDoodle('PostSubcapCataract'); return false;" ><img src="assets/img/old/PostSubcapCataract.gif" />PostSubcapCataract</button>
-
-<button class="btn btn-default" onclick="drawingEdit.addDoodle('PosteriorCapsule'); return false;" ><img src="assets/img/old/PosteriorCapsule.gif" />PosteriorCapsule</button>
-
 	</div>
 
 <!--<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealAbrasion'); return false;" ><img src="assets/img/old/CornealAbrasion.gif" />CornealAbrasion</button>
@@ -357,6 +350,13 @@
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('AntSynech'); return false;" ><img src="assets/img/old/AntSynech.gif" />AntSynech</button>
 
 <button class="btn btn-default" onclick="drawingEdit.addDoodle('Lens'); return false;" ><img src="assets/img/old/Lens.gif" />Lens</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CornealGraft'); return false;" ><img src="assets/img/old/CornealGraft.gif" />CornealGraft</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PostSubcapCataract'); return false;" ><img src="assets/img/old/PostSubcapCataract.gif" />PostSubcapCataract</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PosteriorCapsule'); return false;" ><img src="assets/img/old/PosteriorCapsule.gif" />PosteriorCapsule</button>
+
 -->
 </div>
 </div>
@@ -367,12 +367,13 @@
 <div class="panel panel-primary" style="background-color:rgba(0,0,0,0.25);">
 <div class="panel-heading" style="font-size:20px;">Diagnosis:</div>
 <div class="panel-body">
-<textarea rows="4" cols="128" id="saveInput" style="font-size:18px;background-color:rgba(200,200,200,0.8);"></textarea>
+<textarea rows="4" id="saveInput" style="width:100%;font-size:18px;background-color:rgba(200,200,200,0.8);"></textarea>
 </div>
 </div>
 </div>
 
 </div>
+<footer style="text-align:center;">Copyright &copy; lvpei.org</footer>
 </body>
 <script type="text/javascript">
     var undoStack = [];
@@ -423,4 +424,6 @@
         document.getElementById("className").innerHTML = drawingEdit.selectedDoodle.className;
         });
 </script>
+<noscript>Sorry, your browser does not support JavaScript!</noscript>
+
 </html>
