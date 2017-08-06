@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="assets/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assets/css/oe-eyedraw.css" type="text/css" media="screen" />
+    <style type="text/css">
+    aside {
+    line-height:20px;
+    background-color:#eeeeee;
+    height:600px;
+    width:790px;
+    float:right;
+    padding:1px;          
+}
+    section {
+    position: relative;
+    bottom: 26px;
+    width:290px;
+    float:left;
+    padding:1px;        
+}
+    button {
+    font-size: 55%;
+
+}
+    #diag-title {
+position: relative;
+bottom: -535px;
+left: -290px;
+
+}
+    </style>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <script src="assets/js/dist/eyedraw.js" type="text/javascript"></script>
+
+    <!--<script type="text/javascript">
+    //Script to Draw a Circular Retina on Canvas 
+    var thumbImg = document.createElement('img');
+
+    thumbImg.src = 'assets/img/Fundus_photograph_of_normal_left_eye.jpg';
+    thumbImg.onload = function() {
+        //**ERROR**Not able to draw a the image onto Canvas with id "canvasEdit"
+    var tmpCtx = window.document.getElementById('can').getContext("2d");
+    
+    tmpCtx.save();
+    tmpCtx.beginPath();
+    tmpCtx.arc(200, 190, 190, 0, Math.PI * 2, true);
+    tmpCtx.closePath();
+    tmpCtx.clip();
+
+    tmpCtx.drawImage(thumbImg, 0, 0, 400, 400);
+
+    tmpCtx.beginPath();
+    tmpCtx.arc(0, 0, 25, 0, Math.PI * 2, true);
+    tmpCtx.clip();
+    tmpCtx.closePath();
+    tmpCtx.restore();
+    };
+
+    </script>-->
+    <script type="text/javascript">
+            var saveInput = document.getElementById('saveInput');
+            var drawingEdit
+            function init(){
+            drawingEdit = new ED.Drawing(document.getElementById('canvasEdit'), ED.eye.Left, 'LPS', true, {graphicsPath:'assets/img/'});
+            var controller = new eyeDrawController(drawingEdit);
+                drawingEdit.init();
+            setTimeout("defaultCanvasJSON()",500);
+            }
+            function defaultCanvasJSON(){undoStack.push(drawingEdit.save());}
+            function eyeDrawController(_drawing){
+                this.callBack = callBack;
+
+                _drawing.registerForNotifications(this, 'callBack', ['ready']);
+                _drawing.showDoodleControls = false;
+                function callBack(_messageArray){
+                    switch (_messageArray['eventName']){
+                        case 'ready':
+                            _drawing.addDoodle('Fundus');
+                            //_drawing.addBindings({CorticalCataract:{grade:{id:'gradeSelect'}}});
+                            
+
+                            _drawing.addBindings({MacularDystrophy:{}});//GroupDescriptionForMascularDystrophy
+                            _drawing.addBindings({ActiveVasculitisNasal:{}});
+                            _drawing.addBindings({SnailTrackDegeneration:{}});
+                            _drawing.addBindings({ActiveVasculitisTemporal:{}});
+                            _drawing.addBindings({ILMPeel:{}});
+                            _drawing.addBindings({SubretinalPigments:{}})
+                            _drawing.addBindings({DrainageRetinotomy:{}});
+                            _drawing.addBindings({ILMPeel:{}});
+                            _drawing.addBindings({EpiretinalMembrane:{}});
+                            _drawing.addBindings({AntPVR:{}});
+                            _drawing.addBindings({Lattice:{}});
+                            _drawing.addBindings({EncirclingBand:{}});
+                            _drawing.addBindings({LaserDemarcation:{}});
+                            _drawing.addBindings({CircumferentialBuckle:{}});
+                            _drawing.addBindings({Sclerostomy:{}});//one way binding check code
+                            _drawing.addBindings({BuckleSuture:{}});
+                            _drawing.addBindings({InnerLeafBreak:{}});
+                            _drawing.addBindings({UTear:{}});
+                            _drawing.addBindings({Cryo:{}});
+                            _drawing.addBindings({RRD:{}});
+                            _drawing.addBindings({SectorPRP:{}});
+                            _drawing.addBindings({ChandelierDouble:{}});
+                            _drawing.addBindings({Dialysis:{}});
+                            _drawing.addBindings({RetinalTouch:{}});
+                            _drawing.addBindings({PosteriorRetinectomy:{}});
+                            _drawing.addBindings({GRT:{}});
+                            _drawing.addBindings({IatrogenicBreak:{}});
+                            _drawing.addBindings({RoundHole:{}});
+                            _drawing.addBindings({LaserCircle:{}});
+                            _drawing.addBindings({EntrySiteBreak:{}});
+                            _drawing.addBindings({StarFold:{}});
+                            _drawing.addBindings({SubretinalFluid:{}});
+                            _drawing.addBindings({SubretinalPFCL:{}});
+                            _drawing.addBindings({FocalLaser:{}});
+                            _drawing.addBindings({RPEDetachment:{}});
+                            _drawing.addBindings({VitreousOpacity:{}});
+                            _drawing.addBindings({DiscHaemorrhage:{}});
+                            _drawing.addBindings({LaserSpot:{}});
+                            _drawing.addBindings({SectorPRPPostPole:{}});
+                            _drawing.addBindings({ChoroidalHaemorrhage:{}});
+                            _drawing.addBindings({SclerosedVessel:{}});
+                            _drawing.addBindings({SiliconeOil:{}})
+                            _drawing.addBindings({MacularGrid:{}});
+                            _drawing.addBindings({BlotHaemorrhage:{}});
+                            _drawing.addBindings({PreRetinalHaemorrhage:{}});
+                            _drawing.addBindings({OpticDiscPit:{}});
+                            _drawing.addBindings({MacularHole:{}});
+                            _drawing.addBindings({Telangiectasis:{}});
+                            _drawing.addBindings({DiabeticNV:{}});
+                            _drawing.addBindings({HardDrusen:{}});
+                            _drawing.addBindings({IRMA:{}});
+                            _drawing.addBindings({Macroaneurysm:{}});
+                            _drawing.addBindings({Microaneurysm:{}});
+                            _drawing.addBindings({RetinalArteryOcclusionPostPole:{}});
+                            _drawing.addBindings({CottonWoolSpot:{}});
+                            _drawing.addBindings({CystoidMacularOedema:{}});
+                            _drawing.addBindings({ChoroidalNaevus:{}});
+                            _drawing.addBindings({MacularThickening:{}});
+                            _drawing.addBindings({FibrousProliferation:{}});
+                            _drawing.addBindings({RegressedFibrousProliferation:{}});
+                            _drawing.addBindings({CNV:{}});
+                            _drawing.addBindings({RetinalVeinOcclusionPostPole:{}});
+                            _drawing.addBindings({DiscPallor:{}});
+                            _drawing.addBindings({Geographic:{}});
+                            _drawing.addBindings({InjectionSite:{}});
+                            _drawing.addBindings({PRPPostPole:{}});
+                            _drawing.addBindings({RPERip:{}});
+                            _drawing.addBindings({DrainageSite:{}});
+                            _drawing.addBindings({ChandelierSingle:{}});
+                            
+                            //_drawing.addDeleteValues({gradeSelect:'None'});
+                            _drawing.deselectDoodles();
+                            break;
+            }
+            }
+            }
+            
+
+    </script>
+<script type="text/javascript">
+    //Script to print out Diagnosis Description of all doodles on the canvas 
+    function print(){
+        var saveInput = document.getElementById('saveInput');
+        saveInput.innerHTML = "";
+    
+        for(var i=1;i<drawingEdit.doodleArray.length;i++){
+            if (i>1) {
+            
+                if (drawingEdit.doodleArray[i-1].className!=drawingEdit.doodleArray[i].className ){
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
+                    if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
+                        saveInput.innerHTML+=", ";
+                    };
+                }
+                else if(drawingEdit.doodleArray[i-1].className==drawingEdit.doodleArray[i].className && drawingEdit.doodleArray[i].description().search("clock")!= -1){
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
+                    if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
+                        saveInput.innerHTML+=", ";
+                    };   
+                }
+            
+            }
+            else{
+                saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
+                saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
+                saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
+                if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
+                    saveInput.innerHTML+=", ";
+                };
+            }   
+       }
+    }
+</script>
+   
+<script type="text/javascript">
+    var crvo = [{"scaleLevel": 1,"version":1.1,"subclass":"Fundus","order":0},{"scaleLevel": 1,"version":1.1,"subclass":"RetinalVeinOcclusionPostPole","apexX":0,"apexY":-30,"arc":360,"rotation":176,"order":1},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":-60,"originY":11,"scaleX":1.70,"scaleY":1.70,"rotation":323,"order":2},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":-343,"originY":-209,"scaleX":1.67,"scaleY":1.67,"rotation":210,"order":3},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":335,"originY":198,"scaleX":1.70,"scaleY":1.70,"rotation":35,"order":4},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":53,"originY":-48,"scaleX":1.66,"scaleY":1.66,"rotation":152,"order":5},{"scaleLevel": 1,"version":1.1,"subclass":"MacularThickening","originX":0,"originY":0,"apexX":100,"apexY":0,"order":6},{"scaleLevel": 1,"version":1.1,"subclass":"CystoidMacularOedema","scaleX":0.20,"scaleY":0.20,"order":7},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":23,"originY":314,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":8},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":-300,"originY":0,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":9},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":3,"originY":-397,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":10},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":207,"originY":-213,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":11}];
+    var brvo = [{"scaleLevel": 1,"version":1.1,"subclass":"Fundus","order":0},{"scaleLevel": 1,"version":1.1,"subclass":"RetinalVeinOcclusionPostPole","apexX":0,"apexY":-30,"arc":90,"rotation":45,"order":1},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":31,"originY":-42,"scaleX":1.70,"scaleY":1.70,"rotation":157,"order":2},{"scaleLevel": 1,"version":1.1,"subclass":"MacularThickening","originX":0,"originY":0,"apexX":100,"apexY":0,"order":3},{"scaleLevel": 1,"version":1.1,"subclass":"CystoidMacularOedema","scaleX":0.20,"scaleY":0.20,"order":4},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":138,"originY":-100,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":5},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":29,"originY":-352,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":6}];
+    var mild =[{"scaleLevel": 1,"version":1.1,"subclass":"Fundus","order":0},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":50,"originY":-50,"order":1},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":1,"originY":72,"order":2},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":-50,"originY":13,"order":3}];
+    var moderate = [{"scaleLevel": 1,"version":1.1,"subclass":"Fundus","order":0},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":50,"originY":-50,"order":1},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":1,"originY":72,"order":2},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":-50,"originY":13,"order":3},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-185,"originY":141,"scaleX":0.50,"scaleY":0.50,"order":4},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":10,"originY":-78,"scaleX":0.50,"scaleY":0.50,"order":5},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-125,"originY":-93,"scaleX":0.50,"scaleY":0.50,"order":6},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":16,"originY":183,"scaleX":0.50,"scaleY":0.50,"order":7},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":13,"originY":270,"scaleX":0.50,"scaleY":0.50,"order":8},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":187,"originY":-74,"scaleX":0.50,"scaleY":0.50,"order":9},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-83,"originY":-229,"scaleX":0.50,"scaleY":0.50,"order":10},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":273,"originY":31,"scaleX":0.50,"scaleY":0.50,"order":11},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":61,"originY":62,"scaleX":0.50,"scaleY":0.50,"order":12},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-43,"originY":185,"scaleX":0.50,"scaleY":0.50,"order":13},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":156,"originY":-15,"order":14},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-90,"originY":82,"order":15},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":29,"originY":-125,"order":16},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-63,"originY":-97,"order":17},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-61,"originY":-154,"order":18},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":55,"originY":145,"order":19},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-188,"originY":100,"order":20}];
+    var severe = [{"scaleLevel": 1,"version":1.1,"subclass":"Fundus","order":0},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":50,"originY":-50,"order":1},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":1,"originY":72,"order":2},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":-50,"originY":13,"order":3},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-185,"originY":141,"scaleX":0.50,"scaleY":0.50,"order":4},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":10,"originY":-78,"scaleX":0.50,"scaleY":0.50,"order":5},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-125,"originY":-93,"scaleX":0.50,"scaleY":0.50,"order":6},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":16,"originY":183,"scaleX":0.50,"scaleY":0.50,"order":7},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":13,"originY":270,"scaleX":0.50,"scaleY":0.50,"order":8},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":187,"originY":-74,"scaleX":0.50,"scaleY":0.50,"order":9},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-83,"originY":-229,"scaleX":0.50,"scaleY":0.50,"order":10},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":273,"originY":31,"scaleX":0.50,"scaleY":0.50,"order":11},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":61,"originY":62,"scaleX":0.50,"scaleY":0.50,"order":12},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-43,"originY":185,"scaleX":0.50,"scaleY":0.50,"order":13},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":156,"originY":-15,"order":14},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-90,"originY":82,"order":15},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":29,"originY":-125,"order":16},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-63,"originY":-97,"order":17},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-61,"originY":-154,"order":18},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":55,"originY":145,"order":19},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-188,"originY":100,"order":20},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":252,"originY":-127,"scaleX":1.00,"scaleY":1.00,"rotation":246,"order":21},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":-104,"originY":158,"scaleX":1.00,"scaleY":1.00,"rotation":0,"order":22},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":189,"originY":83,"scaleX":1.00,"scaleY":1.00,"rotation":131,"order":23},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":-192,"originY":-173,"scaleX":1.00,"scaleY":1.00,"rotation":188,"order":24},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":-299,"originY":-24,"scaleX":1.00,"scaleY":1.00,"rotation":277,"order":25}];
+    var proliferative = [{"scaleLevel": 1,"version":1.1,"subclass":"Fundus","order":0},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":50,"originY":-50,"order":1},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":1,"originY":72,"order":2},{"scaleLevel": 1,"version":1.1,"subclass":"Microaneurysm","apexY":-100,"originX":-50,"originY":13,"order":3},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-185,"originY":141,"scaleX":0.50,"scaleY":0.50,"order":4},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":10,"originY":-78,"scaleX":0.50,"scaleY":0.50,"order":5},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-125,"originY":-93,"scaleX":0.50,"scaleY":0.50,"order":6},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":16,"originY":183,"scaleX":0.50,"scaleY":0.50,"order":7},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":13,"originY":270,"scaleX":0.50,"scaleY":0.50,"order":8},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":187,"originY":-74,"scaleX":0.50,"scaleY":0.50,"order":9},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-83,"originY":-229,"scaleX":0.50,"scaleY":0.50,"order":10},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":273,"originY":31,"scaleX":0.50,"scaleY":0.50,"order":11},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":61,"originY":62,"scaleX":0.50,"scaleY":0.50,"order":12},{"scaleLevel": 1,"version":1.1,"subclass":"BlotHaemorrhage","originX":-43,"originY":185,"scaleX":0.50,"scaleY":0.50,"order":13},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":156,"originY":-15,"order":14},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-90,"originY":82,"order":15},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":29,"originY":-125,"order":16},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-63,"originY":-97,"order":17},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-61,"originY":-154,"order":18},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":55,"originY":145,"order":19},{"scaleLevel": 1,"version":1.1,"subclass":"HardExudate","originX":-188,"originY":100,"order":20},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":252,"originY":-127,"scaleX":1.00,"scaleY":1.00,"rotation":246,"order":21},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":-104,"originY":158,"scaleX":1.00,"scaleY":1.00,"rotation":0,"order":22},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":189,"originY":83,"scaleX":1.00,"scaleY":1.00,"rotation":131,"order":23},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":-192,"originY":-173,"scaleX":1.00,"scaleY":1.00,"rotation":188,"order":24},{"scaleLevel": 1,"version":1.1,"subclass":"IRMA","originX":-299,"originY":-24,"scaleX":1.00,"scaleY":1.00,"rotation":277,"order":25},{"scaleLevel": 1,"version":1.1,"subclass":"DiabeticNV","originX":-198,"originY":-106,"scaleX":0.50,"scaleY":0.50,"order":26},{"scaleLevel": 1,"version":1.1,"subclass":"DiabeticNV","originX":14,"originY":-186,"scaleX":0.50,"scaleY":0.50,"order":27},{"scaleLevel": 1,"version":1.1,"subclass":"DiabeticNV","originX":107,"originY":168,"scaleX":0.50,"scaleY":0.50,"order":28},{"scaleLevel": 1,"version":1.1,"subclass":"DiabeticNV","originX":122,"originY":-86,"scaleX":0.50,"scaleY":0.50,"order":29},{"scaleLevel": 1,"version":1.1,"subclass":"DiabeticNV","originX":-184,"originY":189,"scaleX":0.50,"scaleY":0.50,"order":30},{"scaleLevel": 1,"version":1.1,"subclass":"DiabeticNV","originX":165,"originY":-187,"scaleX":0.50,"scaleY":0.50,"order":31},{"scaleLevel": 1,"version":1.1,"subclass":"DiabeticNV","originX":185,"originY":17,"scaleX":0.50,"scaleY":0.50,"order":32}];
+    function loadTemplate(json){
+        drawingEdit.resetEyedraw();
+        drawingEdit.loadJSON(json);
+        drawingEdit.repaint();
+    }
+</script>
+</head>
+
+<body onload="init();">
+<!--**Cortical Cataract Membrane button**
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="assets/img/old/CorticalCataract.gif" /></button>
+-->
+<div class="row">
+<div class="col-md-12">
+<h1><u>Retina Tool (OS)</u></h1>
+</div>
+</div>
+<div class="row">
+<div class="col-md-5">
+
+<canvas id="canvasEdit" class="ed-canvas-edit" width="520" height="520" style="poistion:relative; margin-left: auto; margin-right: auto;"></canvas>
+
+<button class="btn btn-default" onclick="print();"><img src="assets/img/old/Save.gif" />Save</button>
+
+<button class="btn btn-default" onclick="drawingEdit.deleteSelectedDoodle();"><img src="assets/img/icons/32x32/manipulate/delete.png" />Delete</button>
+
+<button class="btn btn-default" onclick="window.location.reload();"><img src="assets/img/icons/32x32/manipulate/delete.png" />DeleteAll</button>
+
+<button class="btn btn-default" onclick="drawingEdit.moveToFront();" ><img src="assets/img/icons/32x32/manipulate/move-to-front.png" />MoveToFront</button>
+
+<button class="btn btn-default" onclick="drawingEdit.moveToBack();" ><img src="assets/img/icons/32x32/manipulate/move-to-back.png" />MoveToBack</button>
+
+
+
+<!--
+
+<button class="btn btn-default" onclick="drawingEdit.flipVer();" ><img src="assets/img/old/flipVer.gif" />FlipVertically</button>
+
+<button class="btn btn-default" onclick="drawingEdit.flipHor();" ><img src="assets/img/old/flipHor.gif" />FlipHorizontally</button>
+
+-->
+<button class="btn btn-default" onclick="drawingEdit.lock();" ><img src="assets/img/icons/32x32/draw/old/lock.png" />Lock</button>
+
+<button class="btn btn-default" onclick="drawingEdit.unlock();" ><img src="assets/img/icons/32x32/draw/old/unlock.png" />Unlock</button>
+
+<button class="btn btn-default" onclick="undo();" ><img src="assets/img/icons/32x32/draw/old/Undo.png" />Undo</button>
+
+<button class="btn btn-default" onclick="redo();" ><img src="assets/img/icons/32x32/draw/old/Redo.png" />Redo</button>
+
+<div class="panel panel-default">
+<div class="panel-heading">Selected Annotation</div>
+<div class="panel-body">
+<p id="className">None Selected</p>
+</div>
+</div>
+
+</div>
+
+<div class="col-md-7">
+
+
+
+<!--
+<button class="btn btn-default" onclick="drawingEdit.clear(false);" >Clear</button>
+-->
+<div class="panel panel-primary">
+    <div class="panel-heading">Retinal Annotations</div>
+    <div class="panel-body">
+        <div id="add">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <button data-toggle="collapse" data-target="#dr">DR</button>
+                </div>
+
+                <div id="dr" class="collapse">
+                    <div class="panel-heading"><button data-toggle="collapse" data-target="#pdr" onclick="drawingEdit.addDoodle('FibrousProliferation');drawingEdit.addDoodle('IRMA');drawingEdit.addDoodle('TractionRetinalDetachment');drawingEdit.addDoodle('DiabeticNV');drawingEdit.addDoodle('Microaneurysm');drawingEdit.addDoodle('HardExudate');drawingEdit.addDoodle('VitreousHaemorrhage'); return false;">PDR</button></div>
+                    <div id="pdr" class="collapse">
+
+                    	<button class="btn btn-default" onclick="drawingEdit.addDoodle('FibrousProliferation'); return false;" ><img src="assets/img/old/FibrousProliferation.gif" />FibrousProliferation</button>
+
+                    	<button class="btn btn-default" onclick="drawingEdit.addDoodle('IRMA'); return false;" ><img src="assets/img/old/IRMA.gif" />IRMA</button>
+
+                        <button class="btn btn-default" onclick="drawingEdit.addDoodle('TractionRetinalDetachment'); return false;" ><img src="assets/img/old/TractionRetinalDetachment.gif" />TRD</button>
+
+                        <button class="btn btn-default" onclick="drawingEdit.addDoodle('DiabeticNV'); return false;" ><img src="assets/img/old/DiabeticNV.gif" />DiabeticNV</button>
+
+                        <button class="btn btn-default" onclick="drawingEdit.addDoodle('Microaneurysm'); return false;" ><img src="assets/img/old/Microaneurysm.gif" />Microaneurysm</button>
+
+                        <button class="btn btn-default" onclick="drawingEdit.addDoodle('HardExudate'); return false;" ><img src="assets/img/old/HardExudate.gif" />HardExudate</button>
+
+                        <button class="btn btn-default" onclick="drawingEdit.addDoodle('VitreousHaemorrhage'); return false;" ><img src="assets/img/old/VitreousOpacity.gif" />VitreousHaemorrhage</button>
+
+                    </div>
+
+                    <div class="panel-heading">
+                    <button data-toggle="collapse" data-target="#npdr">NPDR</button></div>
+                    <div id="npdr" class="collapse">
+                        <button class="btn btn-default" onclick="loadTemplate(mild);
+                        drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/VenousDilatation.png" />MildLoad</button>
+
+                        <button class="btn btn-default" onclick="loadTemplate(moderate);drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/VenousDilatation.png" />ModerateLoad</button>
+                        <button class="btn btn-default" onclick="loadTemplate(severe);drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/VenousDilatation.png" />SevereLoad</button>
+                    </div>
+                </div>
+            </div>
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <button data-toggle="collapse" data-target="#rd" onclick="drawingEdit.addDoodle('AntPVR');drawingEdit.addDoodle('RRD');drawingEdit.addDoodle('PeripheralRRD');drawingEdit.addDoodle('Lattice'); return false;">RD</button>
+    </div>
+    <div id="rd" class="collapse">
+        <button class="btn btn-default" onclick="drawingEdit.addDoodle('AntPVR'); return false;" ><img src="assets/img/old/AntPVR.gif" />AntPVR</button>
+
+        <button class="btn btn-default" onclick="drawingEdit.addDoodle('RRD'); return false;" ><img src="assets/img/old/RRD.gif" />RRD</button>
+
+        <button class="btn btn-default" onclick="drawingEdit.addDoodle('PeripheralRRD'); return false;" ><img src="assets/img/old/RRD.gif" />PeripheralRRD</button>
+
+        <button class="btn btn-default" onclick="drawingEdit.addDoodle('Lattice'); return false;" ><img src="assets/img/old/Lattice.gif" />Lattice</button>
+    </div>
+</div>
+</div>
+<div class="panel panel-info">
+<div class="panel-heading">
+                    <button data-toggle="collapse" data-target="#rest">all</button></div>
+<div id="rest" class="collapse">
+<button class="btn btn-default" onclick="loadTemplate(mild);drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/VenousDilatation.png" />MildLoad</button>
+
+<button class="btn btn-default" onclick="loadTemplate(severe);drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/VenousDilatation.png" />SevereLoad</button>
+
+<button class="btn btn-default" onclick="loadTemplate(moderate);drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/VenousDilatation.png" />ModerateLoad</button>
+
+<button class="btn btn-default" onclick="loadTemplate(crvo); return false;" ><img src="assets/img/old/VenousDilatation.png" />CRVOLoad</button>
+
+<button class="btn btn-default" onclick="loadTemplate(brvo); return false;" ><img src="assets/img/old/VenousDilatation.png" />BRVOLoad</button>
+
+<button class="btn btn-default" onclick="loadTemplate(proliferative); return false;" ><img src="assets/img/old/VenousDilatation.png" />ProliferativeLoad</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('TractionRetinalDetachment'); return false;" ><img src="assets/img/old/TractionRetinalDetachment.gif" />TRD</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Microaneurysm'); return false;" ><img src="assets/img/old/Microaneurysm.gif" />Microaneurysm</button>
+
+ <button class="btn btn-default" onclick="drawingEdit.addDoodle('HardExudate'); return false;" ><img src="assets/img/old/HardExudate.gif" />HardExudate</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('VenousDilatation'); return false;" ><img src="assets/img/old/VenousDilatation.png" />VenousDilatation</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('AvascularRetina'); return false;" ><img src="assets/img/old/RetinalArteryOcclusionPostPole.gif" />AvascularRetina</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SnailTrackDegeneration'); return false;" ><img src="assets/img/old/Lattice.gif" />SnailTrackDegeneration</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ActiveVasculitisNasal'); return false;" ><img src="assets/img/icons/32x32/draw/new/ActiveVasculitis.png" />ActiveVasculitisNasal</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ActiveVasculitisTemporal'); return false;" ><img src="assets/img/icons/32x32/draw/new/ActiveVasculitis.png" />ActiveVasculitisTemporal</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('HealedVasculitisNasal'); return false;" ><img src="assets/img/icons/32x32/draw/new/HealedVasculitis.png" />HealedVasculitisNasal</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('HealedVasculitisTemporal'); return false;" ><img src="assets/img/icons/32x32/draw/new/HealedVasculitis.png" />HealedVasculitisTemporal</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RPEDegeneration'); return false;" ><img src="assets/img/icons/32x32/draw/new/RPEDegeneration.png" />RPEDegeneration</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('IntraretinalPigments'); return false;" ><img src="assets/img/icons/32x32/draw/new/IntraretinalPigments.png" />IntraretinalPigments</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SubretinalPigments'); return false;" ><img src="assets/img/icons/32x32/draw/new/SubretinalPigments.png" />SubretinalPigments</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('VitreousSeeds'); return false;" ><img src="assets/img/icons/32x32/draw/new/VitreousSeeds.png" />VitreousSeeds</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SiliconeOil'); return false;" ><img src="assets/img/icons/32x32/draw/old/SiliconeOil.png" />SiliconeOil</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Retinoblastoma'); return false;" ><img src="assets/img/icons/32x32/draw/new/Retinoblastoma.png" />Retinoblastoma</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/CottonWoolSpot.gif" />CottonWoolSpot</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('BlotHaemorrhage'); return false;" ><img src="assets/img/old/BlotHaemorrhage.gif" />BlotHaemorrhage</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('IRMA'); return false;" ><img src="assets/img/old/IRMA.gif" />IRMA</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('AntPVR'); return false;" ><img src="assets/img/old/AntPVR.gif" />AntPVR</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RRD'); return false;" ><img src="assets/img/old/RRD.gif" />RRD</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PeripheralRRD'); return false;" ><img src="assets/img/old/RRD.gif" />PeripheralRRD</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Lattice'); return false;" ><img src="assets/img/old/Lattice.gif" />Lattice</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Microaneurysm'); return false;" ><img src="assets/img/old/Microaneurysm.gif" />Microaneurysm</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PreRetinalHaemorrhage'); return false;" ><img src="assets/img/old/PreRetinalHaemorrhage.gif" />PreRetinalHaemorrhage</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('DiabeticNV'); return false;" ><img src="assets/img/old/DiabeticNV.gif" />DiabeticNV</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CystoidMacularOedema'); return false;" ><img src="assets/img/old/CystoidMacularOedema.gif" />CystoidMacularOedema</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SectorPRP'); return false;" ><img src="assets/img/old/SectorPRP.gif" />SectorPRP</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SectorPRPPostPole'); return false;" ><img src="assets/img/old/SectorPRPPostPole.gif" />SectorPRPPostPole</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('LaserSpot'); return false;" ><img src="assets/img/old/LaserSpot.gif" />LaserSpot</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('FocalLaser'); return false;" ><img src="assets/img/old/FocalLaser.gif" />FocalLaser</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('LaserCircle'); return false;" ><img src="assets/img/old/LaserCircle.gif" />LaserCircle</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('LaserDemarcation'); return false;" ><img src="assets/img/old/LaserDemarcation.gif" />LaserDemarcation</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Cryo'); return false;" ><img src="assets/img/old/Cryo.gif" />Cryo</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('VitreousOpacity'); return false;" ><img src="assets/img/old/VitreousOpacity.gif" />VitreousOpacity</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('VitreousCondensation'); return false;" ><img src="assets/img/old/VitreousOpacity.gif" />VitreousCondensation</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('VitreousHaemorrhage'); return false;" ><img src="assets/img/old/VitreousOpacity.gif" />VitreousHaemorrhage</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('FibrousProliferation'); return false;" ><img src="assets/img/old/FibrousProliferation.gif" />FibrousProliferation</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RegressedFibrousProliferation'); return false;" ><img src="assets/img/old/FibrousProliferation.gif" />RegressedFibrousProliferation</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('StarFold'); return false;" ><img src="assets/img/old/StarFold.gif" />StarFold</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Circinate'); return false;" ><img src="assets/img/old/Circinate.gif" />Circinate</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Dialysis'); return false;" ><img src="assets/img/old/Dialysis.gif" />Dialysis</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('GRT'); return false;" ><img src="assets/img/old/GRT.gif" />GRT</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('UTear'); return false;" ><img src="assets/img/old/UTear.gif" />UTear</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('IatrogenicBreak'); return false;" ><img src="assets/img/old/IatrogenicBreak.gif" />IatrogenicBreak</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RoundHole'); return false;" ><img src="assets/img/old/RoundHole.gif" />RoundHole</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('EntrySiteBreak'); return false;" ><img src="assets/img/old/EntrySiteBreak.gif" />EntrySiteBreak</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('DrainageRetinotomy'); return false;" ><img src="assets/img/old/DrainageRetinotomy.gif" />DrainageRetinotomy</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PosteriorRetinectomy'); return false;" ><img src="assets/img/old/PosteriorRetinectomy.gif" />PosteriorRetinectomy</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PeripheralRetinectomy'); return false;" ><img src="assets/img/old/PeripheralRetinectomy.gif" />PeripheralRetinectomy</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SubretinalFluid'); return false;" ><img src="assets/img/old/SubretinalFluid.gif" />SubretinalFluid</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('MacularDystrophy'); return false;" ><img src="assets/img/old/MacularDystrophy.gif" />MacularDystrophy</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ILMPeel'); return false;" ><img src="assets/img/old/ILMPeel.gif" />ILMPeel</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('EpiretinalMembrane'); return false;" ><img src="assets/img/old/EpiretinalMembrane.gif" />EpiretinalMembrane</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('MacularHole'); return false;" ><img src="assets/img/old/MacularHole.gif" />MacularHole</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('MacularThickening'); return false;" ><img src="assets/img/old/MacularThickening.gif" />MacularThickening</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CNV'); return false;" ><img src="assets/img/old/CNV.gif" />CNV</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('MacularGrid'); return false;" ><img src="assets/img/old/MacularGrid.gif" />MacularGrid</button>
+
+<!--
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('DiscHaemorrhage'); return false;" ><img src="assets/img/old/DiscHaemorrhage.gif" />DiscHaemorrhage</button>
+-->
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('OpticDiscPit'); return false;" ><img src="assets/img/old/OpticDiscPit.gif" />OpticDiscPit</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('HardDrusen'); return false;" ><img src="assets/img/old/HardDrusen.gif" />HardDrusen</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Macroaneurysm'); return false;" ><img src="assets/img/old/Macroaneurysm.gif" />Macroaneurysm</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Telangiectasis'); return false;" ><img src="assets/img/old/Telangiectasis.gif" />Telangiectasis</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RetinalArteryOcclusionPostPole'); return false;" ><img src="assets/img/old/RetinalArteryOcclusionPostPole.gif" />RetinalArteryOcclusionPostPole</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RetinalVeinOcclusionPostPole'); return false;" ><img src="assets/img/old/RetinalVeinOcclusionPostPole.gif" />RetinalVeinOcclusionPostPole</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SclerosedVessel'); return false;" ><img src="assets/img/icons/32x32/draw/new/MacularThickening.png" />SclerosedVessel</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ChoroidalHaemorrhage'); return false;" ><img src="assets/img/old/ChoroidalHaemorrhage.gif" />ChoroidalHaemorrhage</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ChoroidalNaevus'); return false;" ><img src="assets/img/old/ChoroidalNaevus.gif" />ChoroidalNaevus</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RPERip'); return false;" ><img src="assets/img/old/RPERip.gif" />RPERip</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RPEDetachment'); return false;" ><img src="assets/img/old/RPEDetachment.gif" />RPEDetachment</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Geographic'); return false;" ><img src="assets/img/old/Geographic.gif" />Geographic</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('RetinalTouch'); return false;" ><img src="assets/img/old/RetinalTouch.gif" />RetinalTouch</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('SubretinalPFCL'); return false;" ><img src="assets/img/old/SubretinalPFCL.gif" />SubretinalPFCL</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('EncirclingBand'); return false;" ><img src="assets/img/old/Buckle.gif" />EncirclingBand</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('CircumferentialBuckle'); return false;" ><img src="assets/img/old/CircumferentialBuckle.gif" />CircumferentialBuckle</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('Sclerostomy'); return false;" ><img src="assets/img/old/Sclerostomy.gif" />Sclerostomy</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('BuckleSuture'); return false;" ><img src="assets/img/old/BuckleSuture.gif" />BuckleSuture</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('DrainageSite'); return false;" ><img src="assets/img/old/DrainageSite.gif" />DrainageSite</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ChandelierSingle'); return false;" ><img src="assets/img/old/ChandelierSingle.gif" />ChandelierSingle</button>
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('ChandelierDouble'); return false;" ><img src="assets/img/old/ChandelierDouble.gif" />ChandelierDouble</button>
+
+<!--
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('DiscPallor'); return false;" ><img src="assets/img/old/DiscPallor.gif" />DiscPallor</button>-->
+
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('InjectionSite'); return false;" ><img src="assets/img/old/InjectionSite.gif" />InjectionSite</button>
+</div>
+</div>
+</div>
+</div>
+
+<!--
+<button class="btn btn-default" onclick="drawingEdit.addDoodle('PRPPostPole'); return false;" ><img src="assets/img/old/PRPPostPole.gif" />PRPPostPole</button>
+-->
+
+</div>
+
+</div>
+
+<!---->
+<br/>
+
+<!--**Retina Image Canvas**
+<canvas id="can" class="ed-canvas-edit" width="400" height="400"></canvas>
+-->
+
+
+<!--<select id="gradeSelect">
+ <option value="None" selected="selected">None</option>
+ <option value="Mild" >Mild</option>
+ <option value="Moderate">Moderate</option>
+ <option value="White">White</option>
+</select>-->
+
+<!--
+<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:absolute; left: 600px; top:505px; -webkit-user-select: text; -moz-user-select: text; user-select: text;z-index: 100;opacity: 1;">Controls</div>
+-->
+
+
+<div class="panel panel-default">
+<div class="panel-heading">Diagnosis</div>
+<div class="panel-body">
+<textarea rows="4" cols="164" id="saveInput"></textarea>
+</div>
+</div>
+
+</body>
+<script type="text/javascript">
+    var undoStack = [];
+    var redoStack = [];
+    var x = document.getElementById("add").childNodes;
+    document.getElementById("canvasEdit").addEventListener("click",function(){
+        if(undoStack[undoStack.length-1]!==drawingEdit.save()){
+            undoStack.push(drawingEdit.save());
+        }
+    });
+    for(var i=0;i<x.length;i++){
+    x[i].addEventListener("click",function(){
+        if(undoStack[undoStack.length-1]!==drawingEdit.save()){
+            undoStack.push(drawingEdit.save());
+        }
+    });
+}
+    </script>
+   <script type="text/javascript">
+       function undo(){
+        redoStack.push(drawingEdit.save());
+        if (undoStack.length > 0) {
+        var json = undoStack.pop();
+        //alert(json);
+        drawingEdit.resetEyedraw();
+        drawingEdit.repaint();
+        drawingEdit.loadDoodlesJSON(json);
+        drawingEdit.resetEyedraw();
+        drawingEdit.repaint();
+        }
+        else
+        {window.alert("Error!");}
+        }
+    </script>
+<script type="text/javascript">
+    function redo(){
+        undoStack.push(drawingEdit.save());
+        if(redoStack.length > 0){
+            var json = redoStack.pop();
+            drawingEdit.loadDoodlesJSON(json);
+            drawingEdit.resetEyedraw();
+            drawingEdit.repaint();
+        }else{window.alert("None");}
+    }
+</script>
+<script type="text/javascript">
+    document.getElementById("canvasEdit").addEventListener("click",function(){
+        document.getElementById("className").innerHTML = drawingEdit.selectedDoodle.className;
+        });
+</script>
+</html>
